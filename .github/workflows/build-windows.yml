@@ -1,11 +1,8 @@
-
 name: Build Windows installer
-
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-
+permissions:
+  contents: read
 jobs:
   windows:
     runs-on: windows-latest
@@ -19,7 +16,17 @@ jobs:
         with:
           workspaces: src-tauri
       - run: npm install --no-audit --no-fund
+      - run: node scripts/validate-updater-config.cjs
+      - name: Ensure the signing secret exists
+        shell: pwsh
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:TAURI_SIGNING_PRIVATE_KEY)) { throw 'Missing TAURI_SIGNING_PRIVATE_KEY repository secret. See README updater setup.' }
       - run: npm run tauri build
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
       - uses: actions/upload-artifact@v4
         with:
           name: NTE-Tracker-Windows-Installer

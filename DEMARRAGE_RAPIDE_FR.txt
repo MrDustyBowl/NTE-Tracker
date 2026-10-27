@@ -1,0 +1,53 @@
+NTE TRACKER v1.1 — MISES À JOUR AUTOMATIQUES
+===========================================
+
+OBJECTIF
+Après cette installation initiale, chaque nouvelle version signée et publiée
+sur GitHub sera proposée dans NTE Tracker. Tu n'auras plus à réinstaller à la main.
+
+ÉTAPE 1 — SAUVEGARDE
+Ouvre ton application v1.0 actuelle et clique sur « Backup ZIP ».
+Conserve l'archive ailleurs que dans le dossier de l'application.
+
+ÉTAPE 2 — GÉNÉRER UNE CLÉ DE SIGNATURE (UNE SEULE FOIS)
+Installe Node.js 22 ou plus sur https://nodejs.org/
+Décompresse le ZIP v1.1. Ouvre PowerShell dans le dossier extrait.
+Exécute :
+  powershell -NoProfile -ExecutionPolicy Bypass -File .\setup-updater.ps1
+Choisis un mot de passe et CONSERVE-LE.
+La clé publique est ajoutée au fichier src-tauri/tauri.conf.json.
+La clé PRIVÉE est créée dans :
+  %USERPROFILE%\nte-tracker-signing\nte-updater.key
+Ne mets JAMAIS ce fichier privé sur GitHub et ne le partage avec personne.
+Garde une deuxième copie sûre de la clé et de son mot de passe.
+
+ÉTAPE 3 — DEUX SECRETS SUR GITHUB
+Dépôt GitHub → Settings → Secrets and variables → Actions → New repository secret
+  TAURI_SIGNING_PRIVATE_KEY : contenu COMPLET du fichier .key
+  TAURI_SIGNING_PRIVATE_KEY_PASSWORD : mot de passe de la clé
+Ce sont des GitHub SECRETS, pas des fichiers à publier dans le dépôt !
+
+ÉTAPE 4 — PUBLIER LA VERSION 1.1
+Le plus simple : GitHub Desktop (https://desktop.github.com/)
+Clone ton dépôt MrDustyBowl/NTE-Tracker. Copie TOUS les fichiers du projet v1.1
+(dont le tauri.conf.json MODIFIÉ avec ta clé publique) à la racine du clone.
+Commit → Push origin.
+GitHub → Actions → Publish signed update : le workflow se déclenche tout seul.
+Si le workflow réussit, une Release v1.1.0 contient le .exe et latest.json.
+
+ÉTAPE 5 — INSTALLER UNE DERNIÈRE FOIS
+Télécharge le .exe depuis la Release v1.1.0 et installe-le.
+Ouvre NTE Tracker. « Check Updates » doit indiquer v1.1.0 à jour.
+
+À PARTIR DE LA v1.2
+Quand on modifiera le code, on augmentera le numéro de version,
+GitHub compilera et publiera automatiquement, et l'application proposera
+« Update Now ». La base SQLite et les portraits restent sur ton PC.
+
+ATTENTION
+Cette archive contient le CODE SOURCE, pas un exécutable déjà compilé.
+Une vraie compilation Windows et une vraie mise à jour restent à tester.
+Le dépôt est actuellement PUBLIC : la source et les données initiales
+présentes dans seed.json sont visibles, mais pas ta base SQLite locale.
+
+Pour la documentation complète : README.md

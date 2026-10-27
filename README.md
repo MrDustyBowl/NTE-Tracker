@@ -1,89 +1,101 @@
-# NTE Tracker — Tauri 2 Desktop (Windows)
+# NTE Tracker v1.1 — Signed automatic updates (Tauri 2 / Windows)
 
-Local-first progress tracker for **Neverness to Everness**, migrated from `Units.xlsx` and the previous HTML tracker.
+NTE Tracker keeps all characters, Arcs, Bond & Gifts and achievements from the v1.0 desktop app, with **signed updates from GitHub Releases**. Normal tracking still works offline, without a GitHub account or data uploads.
 
-## What works
+## What changes in v1.1
 
-- **Characters** — add, edit, delete; level, awakening, bond, 8 individual skills, notes; upload a PNG/JPEG/WebP portrait (up to 5 MB).
-- **Arcs** — add, edit, delete; level, tier, and linked character.
-- **Bond & Gifts** — update affection, preferred gift, value, price, store, location, dateable status and interactions.
-- **Achievements** — add, edit, delete; category, name, description, rarity, progress, observations, completion; auto-link existing affection milestones to Bond levels.
-- Search, sorting, statistics, JSON import/export, CSV import/export.
-- **SQLite** is the authoritative storage: `nte.sqlite3` in the OS-managed application data directory, independent of the `.exe`.
-- **Portrait files** are stored separately in `portraits/`, and referenced by filename in SQLite.
-- **ZIP backup / restore** includes the complete data snapshot and referenced portraits. The app makes a safety snapshot before ZIP restore and before restoring the Excel seed.
-- **Automatic daily backups:** on launch, `backups/daily-YYYY-MM-DD.zip`, with the 14 most recent daily snapshots retained. Backups are on the same disk unless you export a ZIP elsewhere.
+- **Check Updates** button and automatic update check on startup.
+- Shows new version, release notes, download percentage, **Update Now** and **Later**.
+- Verifies downloaded installer with a permanent **Tauri public signing key**.
+- Before installing, waits for ongoing SQLite writes and **creates a pre-update ZIP backup** with portraits; failure blocks the update.
+- Downloads/installs the signed Windows NSIS installer; restarts app after successful install.
+- Builds a public GitHub Release with installer, signatures and `latest.json` through **Publish signed update** GitHub Actions workflow.
+- Preserves original Tauri identifier `com.ntetracker.desktop`, SQLite storage, imported Excel seed and image directory.
 
-## First run and migration
+**IMPORTANT:** This project contains a `REPLACE_WITH_YOUR_TAURI_PUBLIC_KEY` placeholder. It **cannot be built into a working updater until you complete the ONE-TIME signing setup below**. The signing secret is never included in this ZIP. Do **not** upload any private `.key` file to GitHub or send it to anyone.
 
-The original workbook's **24 characters, 51 Arcs and 10 achievements** are stored in `src-tauri/seed.json` and populated into SQLite **only on the first run**. The source seed is not subsequently used as an active datastore.
+## One-time configuration for the owner
 
-If you modified the earlier `.html` version in Firefox, open that version **in the same browser/profile**, choose **Backup JSON**, and save the downloaded `.json`. Then open the desktop app, choose **Import JSON / CSV**, and select that file. Confirm the replacement. Your edits are saved in SQLite. The old Firefox `localStorage` is not automatically accessible to Tauri.
+Your existing GitHub repository is `MrDustyBowl/NTE-Tracker` and the endpoint is already configured as:
 
-To move your tracker to another PC, use **Backup ZIP** and then **Restore ZIP** on the destination machine. The ZIP includes profile images, while **Export JSON** is mainly for compatibility with previous tracker versions and does **not** include picture bytes.
+`https://github.com/MrDustyBowl/NTE-Tracker/releases/latest/download/latest.json`
 
-## Build a Windows installer (recommended)
+The Releases must remain publicly accessible for the app to download updates without logging in. Your screenshot showed this repo as **Public**, so you can use it directly. If you change the repository name/visibility, update the endpoint and publishing approach accordingly.
 
-### Option A — on Windows
+### 1. Generate your signing identity on your own PC
 
-1. Install **Node.js 22+**, **Rust via rustup**, and **Visual Studio 2022 Build Tools with Desktop development with C++**. Ensure **WebView2** is available (normally present on modern Windows 10/11).
-2. Unzip this project somewhere writable on your PC.
-3. Double-click `build-windows.bat` (or run the commands below in PowerShell).
-4. Find the generated **NSIS installer `.exe`** under `src-tauri/target/release/bundle/nsis/`.
+You only need **Node.js 22+** and PowerShell. Rust isn't needed just to create the key.
 
-```powershell
-npm install
-npm run tauri build
-```
+1. Extract the entire v1.1 source project ZIP into a folder on your Windows PC.
+2. Install Node.js 22+ from https://nodejs.org/ if needed. Restart PowerShell after installing.
+3. Open PowerShell *in that extracted folder*, then run:
 
-For live development:
+   ```powershell
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\setup-updater.ps1
+   ```
 
-```powershell
-npm install
-npm run tauri dev
-```
+4. Follow the Tauri CLI prompt to generate an updater key and **save the passphrase** you choose.
+5. The script writes the **public** key into `src-tauri/tauri.conf.json`. The **private** key is stored outside the project at `%USERPROFILE%\nte-tracker-signing\nte-updater.key`.
 
-The first compilation can take longer while Rust downloads and compiles dependencies.
+**Back up your private key and its passphrase securely somewhere other than your PC. If the private key is lost, existing installs cannot verify updates signed with a different key. Do not regenerate or rotate it casually.**
 
-### Option B — GitHub Actions (without installing Rust locally)
+### 2. Set TWO GitHub repository secrets
 
-1. Create a **private** GitHub repository and upload the contents of this project folder (including `.github/workflows/build-windows.yml`).
-2. In GitHub, open **Actions → Build Windows installer → Run workflow**.
-3. When the job succeeds, download the **NTE-Tracker-Windows-Installer** artifact from the completed workflow run.
-4. Unzip the artifact and run its `.exe` installer on Windows.
+Go to **GitHub → your NTE-Tracker repository → Settings → Secrets and variables → Actions → New repository secret**.
 
-GitHub Actions builds on an actual Windows runner. No GitHub account or cloud server is needed **to use the installed tracker**.
+| Secret name | Value |
+| --- | --- |
+| `TAURI_SIGNING_PRIVATE_KEY` | **Entire content** of `%USERPROFILE%\nte-tracker-signing\nte-updater.key` (including any newlines). |
+| `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` | The password you entered when you generated the key. |
 
-## Where is my data?
+The private key and its password should **never** be committed into your source code or GitHub releases. Do not send me either value. For the secret value, open the private key file in Notepad locally and copy its text into GitHub Secrets — **NOT into a repository file**.
 
-Inside the app, click **Show data folder** near the bottom. The path is determined by Tauri from your Windows account; do not edit `nte.sqlite3` while the app is open.
+### 3. Upload the updated source files to your existing repo
 
-- `nte.sqlite3`: editable persistent records, managed transactionally by SQLite.
-- `portraits/`: your uploaded portrait images.
-- `backups/`: automatic daily archives and pre-restore safeguards.
+**Recommended for Windows:** install [GitHub Desktop](https://desktop.github.com/), clone `MrDustyBowl/NTE-Tracker`, copy all the files and folders from the extracted v1.1 project into the local repository (replace old files), and make sure you copy **the edited** `src-tauri/tauri.conf.json` containing your public key. Commit and **Push origin** in GitHub Desktop.
 
-**Keep ZIP backups on another drive or cloud storage**, too. Daily backups on the same drive cannot protect against drive failure. A backup is only as good as your ability to restore it; occasionally test a spare copy.
+This preserves hidden `.github/workflows/` files too, instead of depending on Firefox to upload them. The `src-tauri/seed.json` import data is unchanged.
 
-## Known limitations / next steps
+If you upload by browser instead, preserve directories exactly (`src/`, `src-tauri/`, `scripts/`, `.github/workflows/`) and replace matching files; there is **no separate outer** `NTE-Tracker-Tauri-v1.1/` folder in the repository root.
 
-- This release delivers **source code** and build automation. No Windows `.exe` was produced or tested in this Linux environment without a Rust/Cargo build toolchain.
-- This version preserves your existing HTML dashboard layout rather than creating a new custom one.
-- No built-in auto-update yet. Rebuilding/replacing the application does not remove the app-data directory, but always export a ZIP before an upgrade.
-- Deleting an entry removes it from the live tracker. Recovery requires ZIP backups (there is not yet a Recycle Bin).
-- Stored JSON is not encrypted. Anyone with access to your Windows profile/app-data files could read the tracker.
-- Automatic backup warnings are written to the runtime log; the app remains usable if automatic backup fails. Use the Backup ZIP button to verify that exporting succeeds.
+### 4. Publish and install v1.1 ONCE
 
-## Project structure
+1. After you **Push origin** with the v1.1 public key configuration, GitHub automatically runs **Actions → Publish signed update**. This signs the installer, creates release `v1.1.0` and uploads `latest.json` plus the NSIS `.exe` and signature. You can also trigger **Run workflow** manually if necessary.
+2. Wait for a **green Success**. Open **Releases** on the repository and confirm `v1.1.0` has `latest.json` and a Windows setup `.exe`.
+3. **Make a manual Backup ZIP from your existing v1.0 app**, saved outside the tracker data folder.
+4. Download the **v1.1.0 setup `.exe`** from the GitHub Release and install it once. Keep the same Windows user account and application identifier; do not uninstall with an option to remove user data.
+5. Open NTE Tracker v1.1 and use **Check Updates**. It should show *Up to date — v1.1.0*.
 
-- `src/main.js`: UI logic and Tauri invocations
-- `src/style.css`, `index.html`: existing tracker design, now served by Vite
-- `src-tauri/src/lib.rs`: SQLite operations, portrait storage, ZIP backup/restore, first-run seed
-- `src-tauri/seed.json`: once-only Excel snapshot
-- `.github/workflows/build-windows.yml`: automated Windows installer compilation
-- `test-ui.cjs`: dependency-free UI logic smoke test
+**v1.0 cannot auto-upgrade to v1.1**: the currently installed version has no updater plugin. This is the **one necessary manual upgrade**.
 
-`node test-ui.cjs` verifies the imported roster is rendered, Bond writes persist through the mocked native command, and deletion updates the mocked database.
+### 5. Next versions: no manual reinstallation
 
-## Data ownership and privacy
+When we add features, I will supply changed source files:
 
-All normal operation is offline. No sign-in, database server, telemetry, or third-party API is used. The GitHub build workflow is optional. Uploaded portrait pictures stay in the application's local data directory.
+1. Update files in GitHub Desktop and run, for example, `node scripts/bump-version.cjs 1.2.0` before committing. Push to `main`.
+2. GitHub Actions automatically checks the new version, signs and publishes `v1.2.0`. If a release for the same version already exists, it skips publishing rather than replacing the signed release.
+3. On your PC, start NTE Tracker. It will offer v1.2.0 automatically; click **Update Now**. The program saves a pre-update ZIP, verifies the signed installer, installs and restarts.
+
+The **Publish signed update** workflow runs on every `main` push, but only actually builds and publishes when you've **bumped the app version** (e.g., 1.1.0 → 1.2.0). The separate **Build Windows installer** workflow remains manually triggerable for debugging. Be deliberate when bumping the version: pushing that change is approval to publish the new version.
+
+## Data protection and details
+
+- User data lives under Tauri's application data directory, **not** in the installer, GitHub source files or web server.
+- A fresh installation seeds Excel data only if the SQLite database has never been populated; upgrading **does not** overwrite the existing collection.
+- Automatic daily ZIP snapshots remain; a **pre-update-YYYYMMDD-HHMMSS-UUID.zip** is added for each install attempt. ZIP includes referenced portraits.
+- App may check GitHub on startup; **tracking does not depend on internet connectivity**. Checks are silent if offline; manual checks show the error.
+- This only checks on **startup or when you press Check Updates**, not continuously in the background.
+- The SQLite and image backups reside on the same disk unless you manually export to another drive/cloud folder. Back up externally too.
+- Code signing with a Windows publisher certificate (for SmartScreen reputation) is **different** from the mandatory Tauri updater signature. The updater key doesn't eliminate SmartScreen warnings on the initial installer.
+- Your GitHub repository is **public**. The `seed.json` sample roster/progress is part of published source code, so don't commit any private character/achievement activity you would prefer to keep private. Later local SQLite changes are **not uploaded** by this updater.
+
+## Developer validation
+
+- `node test-ui.cjs` — v1.0 interface and data store smoke test.
+- `node test-updater.cjs` — update UI, progress, backup failure, save failure, restart smoke test.
+- `node scripts/validate-updater-config.cjs` — verifies the public key has been configured, versions match and endpoint is correct. Fails until signing setup is complete.
+- `npm install && npm run tauri build` — actual native build (on Windows, with `TAURI_SIGNING_PRIVATE_KEY` and `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` environment variables).
+
+**Build verification caveat:** JavaScript and HTML smoke tests can run without Rust, but the Windows native build, signing and live GitHub Release updater will still need to be validated on GitHub Actions and your PC. Source ZIP is not a compiled installer.
+
+Official reference: https://v2.tauri.app/plugin/updater/ and https://github.com/tauri-apps/tauri-action .

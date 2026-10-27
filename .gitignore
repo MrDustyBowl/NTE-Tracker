@@ -4,3 +4,8 @@ src-tauri/target/
 src-tauri/gen/schemas/
 *.log
 .DS_Store
+
+# Never commit signing secrets
+*.key
+*.key.pub
+.env*

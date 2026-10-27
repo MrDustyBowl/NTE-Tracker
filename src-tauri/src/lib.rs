@@ -153,10 +153,20 @@ fn ensure_daily_backup(paths: &AppPaths) -> CmdResult<()> {
     for old in daily.iter().take(daily.len().saturating_sub(14)) { let _ = fs::remove_file(old); }
     Ok(())
 }
-fn create_safety_backup(paths: &AppPaths) -> CmdResult<()> {
-    let dest = paths.backups().join(format!("pre-restore-{}-{}.zip",
+fn create_named_safety_backup(paths: &AppPaths, prefix: &str) -> CmdResult<()> {
+    let dest = paths.backups().join(format!("{}-{}-{}.zip", prefix,
         Local::now().format("%Y%m%d-%H%M%S"), Uuid::new_v4()));
     create_archive(paths, &dest)
+}
+
+fn create_safety_backup(paths: &AppPaths) -> CmdResult<()> {
+    create_named_safety_backup(paths, "pre-restore")
+}
+
+/// Block the update when the safety archive cannot be written.
+#[tauri::command]
+fn backup_before_update(paths: tauri::State<'_, AppPaths>) -> CmdResult<()> {
+    create_named_safety_backup(&paths, "pre-update")
 }
 
 #[tauri::command]
@@ -290,6 +300,8 @@ fn get_data_directory(paths: tauri::State<'_, AppPaths>) -> String {
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_process::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .setup(|app| {
             let root = app.path().app_data_dir()?;
             fs::create_dir_all(root.join("portraits"))?;
@@ -305,7 +317,7 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             load_state, save_state, reset_to_excel, restore_json, save_portrait, read_portrait,
-            backup_zip, restore_zip, get_data_directory
+            backup_zip, restore_zip, get_data_directory, backup_before_update
         ])
         .run(tauri::generate_context!())
         .expect("NTE Tracker startup failed");

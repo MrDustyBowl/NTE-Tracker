@@ -1,0 +1,11 @@
+const fs = require('node:fs');
+const c = JSON.parse(fs.readFileSync('src-tauri/tauri.conf.json', 'utf8'));
+const p = JSON.parse(fs.readFileSync('package.json','utf8'));
+const cargo = fs.readFileSync('src-tauri/Cargo.toml','utf8');
+if (c.version !== p.version || !cargo.includes(`version = "${c.version}"`)) throw new Error('Version mismatch: package.json / tauri.conf.json / Cargo.toml');
+if (c.identifier !== 'com.ntetracker.desktop') throw new Error('App identifier changed: this would change the data directory.');
+if (c.bundle?.createUpdaterArtifacts !== true) throw new Error('Updater artifacts disabled.');
+if (!c.plugins?.updater?.pubkey || c.plugins.updater.pubkey.includes('REPLACE_WITH_')) throw new Error('Missing Tauri signing PUBLIC key. Run setup-updater.ps1 locally and commit the updated src-tauri/tauri.conf.json.');
+const endpoint = c.plugins.updater.endpoints?.[0];
+if (endpoint !== 'https://github.com/MrDustyBowl/NTE-Tracker/releases/latest/download/latest.json') throw new Error('Updater endpoint must point to public GitHub Releases (unless deliberately changed).');
+console.log(`Updater config OK: v${c.version}, expected endpoint ${endpoint}`);

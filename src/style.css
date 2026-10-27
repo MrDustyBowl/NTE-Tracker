@@ -22,3 +22,18 @@
 .desktop-save-note {font-size:11px;color:#89cdbd}
 .header-actions{flex-wrap:wrap;justify-content:flex-end}
 .field input[type=file]{padding:9px 6px;color:#aac2d4;max-width:100%;font-size:12px}
+
+/* v1.1 — Signed update banner */
+.update-banner { margin: 0 0 19px; padding: 16px 19px; border: 1px solid #35877c; border-radius: 14px; background: linear-gradient(115deg, #102d33, #18263d); }
+.update-banner[hidden], .update-track[hidden] { display: none !important; }
+.update-banner-head { display:flex; align-items:center; gap:14px; }
+.update-dot { display:grid;place-items:center;width:38px;height:38px; border-radius:12px;background:#194a4f;color:#a0f3db;font-size:24px;flex:none; }
+.update-info { flex:1;min-width:0; }
+.update-info strong { color:#e3f6f1;font-size:14px; }
+.update-info p { margin:5px 0;color:#b5cbd1;font-size:12px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;max-height:90px;overflow:auto; }
+.update-info span { display:block;font-size:11px;color:#addacb;margin-top:7px; }
+.update-actions { display:flex; gap:8px; align-self:center; }
+.update-actions button:disabled { opacity:.55;cursor:wait; }
+.update-track { margin-top:13px;height:6px;border-radius:8px;background:#294353;overflow:hidden; }
+.update-track span { display:block;width:0;height:100%;background:linear-gradient(90deg,#68c9b3,#a4f2db);transition:width .15s ease; }
+@media(max-width:780px) {.update-banner-head { align-items:flex-start;flex-wrap:wrap; }.update-actions { width:100%; }.update-actions button { flex:1; }}

@@ -136,5 +136,7 @@ else if(action==='clear'){if(confirm('Clear ALL local entries? Back up your data
 document.addEventListener('change',e=>{if(e.target.dataset.action==='complete'){let a=state.achievements.find(x=>x.id===e.target.dataset.id);if(!a)return;if(a.autoBond&&bondAchievement(a)&&!e.target.checked){a.autoBond=false;a.completed=false;}else a.completed=e.target.checked;save();render()}});
 $('#editor-form').addEventListener('submit',handleForm);$('#file-input').addEventListener('change',handleImport);$('#search').addEventListener('input',e=>{filters.search=e.target.value.trim();render()});$('#sort').addEventListener('change',e=>{filters.sort=e.target.value;render()});$('#category-filter').addEventListener('change',e=>{filters.category=e.target.value;render()});$('#status-filter').addEventListener('change',e=>{filters.status=e.target.value;render()});
 document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!$('#editor-dialog').open){e.preventDefault();$('#search').focus()}});
+// The updater waits for the SQLite write queue before creating a pre-update ZIP.
+window.nteBeforeUpdate = async () => (await saveQueue) !== false;
 bootstrap();
 })();

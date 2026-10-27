@@ -1,0 +1,65 @@
+name: Publish signed update
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+concurrency:
+  group: nte-publish-update
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Verify release signing configuration
+        run: node scripts/validate-updater-config.cjs
+      - name: Check whether this version is already published
+        id: release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = (Get-Content src-tauri/tauri.conf.json | ConvertFrom-Json).version
+          $existing = gh release list --repo "$env:GITHUB_REPOSITORY" --limit 100 --json tagName --jq ".[].tagName"
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot list existing releases.' }
+          if (@($existing) -contains "v$version") {
+            Write-Host "Release v$version already exists — no new publish needed."
+            'publish=false' | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+          } else {
+            Write-Host "Preparing new signed release v$version."
+            'publish=true' | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+          }
+      - name: Ensure the signing secret exists
+        if: steps.release.outputs.publish == 'true'
+        shell: pwsh
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:TAURI_SIGNING_PRIVATE_KEY)) { throw 'Missing TAURI_SIGNING_PRIVATE_KEY repository secret. See README updater setup.' }
+      - name: Build, sign and publish GitHub Release with latest.json
+        if: steps.release.outputs.publish == 'true'
+        uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          tagName: v__VERSION__
+          releaseName: 'NTE Tracker v__VERSION__'
+          releaseBody: 'Signed Windows update for NTE Tracker. SQLite data and portraits remain in the application data directory.'
+          releaseDraft: false
+          prerelease: false
+          uploadUpdaterJson: true
+          updaterJsonPreferNsis: true
+          args: '--bundles nsis'

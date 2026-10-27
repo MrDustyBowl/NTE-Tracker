@@ -24,8 +24,12 @@
   <main class="main">
     <div class="header">
       <div><div class="eyebrow">NEVERNESS TO EVERNESS • PERSONAL TRACKER</div><h1 id="page-title">Overview</h1><p class="subtitle" id="page-subtitle">Your progression, all in one place.</p></div>
-      <div class="header-actions"><button class="btn ghost" data-action="import" title="Import a tracker JSON backup or an exported CSV">↥ Import JSON / CSV</button><button class="btn ghost" data-action="restore-zip" title="Restore a full ZIP backup, including portraits">↥ Restore ZIP</button><button class="btn ghost" data-action="backup-zip" title="Back up database and all portraits">↧ Backup ZIP</button><button class="btn ghost" data-action="export-csv" id="csv-main" title="Export the current section to CSV">↧ Export CSV</button><button class="btn ghost" data-action="export-json" title="Download a complete JSON backup">↧ Export JSON</button><button class="btn primary" data-action="add" id="add-main">＋ New Character</button></div>
+      <div class="header-actions"><button class="btn ghost" id="update-check" type="button" title="Check GitHub for signed updates">↻ Check Updates</button><button class="btn ghost" data-action="import" title="Import a tracker JSON backup or an exported CSV">↥ Import JSON / CSV</button><button class="btn ghost" data-action="restore-zip" title="Restore a full ZIP backup, including portraits">↥ Restore ZIP</button><button class="btn ghost" data-action="backup-zip" title="Back up database and all portraits">↧ Backup ZIP</button><button class="btn ghost" data-action="export-csv" id="csv-main" title="Export the current section to CSV">↧ Export CSV</button><button class="btn ghost" data-action="export-json" title="Download a complete JSON backup">↧ Export JSON</button><button class="btn primary" data-action="add" id="add-main">＋ New Character</button></div>
     </div>
+    <section class="update-banner" id="update-banner" hidden aria-live="polite">
+      <div class="update-banner-head"><span class="update-dot">↻</span><div class="update-info"><strong id="update-title">Update available</strong><p id="update-notes"></p><span id="update-status" role="status"></span></div><div class="update-actions"><button class="btn ghost" id="update-later" type="button">Later</button><button class="btn primary" id="update-install" type="button">Update Now</button></div></div>
+      <div class="update-track" id="update-track" hidden><span id="update-progress"></span></div>
+    </section>
     <section class="metrics" aria-label="Current statistics" id="metrics"></section>
     <div id="list-intro"><div class="section-heading"><div><h2 id="list-heading">At a glance</h2><p id="list-description">Quick progress snapshot from your Excel workbook.</p></div></div></div>
     <div class="toolbar" id="toolbar"><label class="search" for="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search..." autocomplete="off"></label><div class="toolbar-right"><select class="select" id="category-filter" aria-label="Achievement category" hidden></select><select class="select" id="status-filter" aria-label="Achievement status" hidden><option value="all">All statuses</option><option value="todo">Not completed</option><option value="done">Completed</option></select><select class="select" id="sort" aria-label="Sort by"></select></div></div>
@@ -38,5 +42,6 @@
 <datalist id="character-suggestions"></datalist><datalist id="rarity-suggestions"><option value="Common"><option value="Uncommon"><option value="Rare"><option value="Epic"><option value="Legendary"></datalist>
 <div class="toast" id="toast" role="status"></div>
 <script type="module" src="/src/main.js"></script>
+<script type="module" src="/src/updater.js"></script>
 </body>
 </html>
