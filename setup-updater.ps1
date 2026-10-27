@@ -11,7 +11,11 @@ Write-Host 'Installing Tauri CLI for key generation...'
 npm install --no-audit --no-fund
 if ($LASTEXITCODE -ne 0) { throw 'npm install failed.' }
 Write-Host 'Create a signing key. Save its passphrase: you must provide it to GitHub Actions.'
-npm run tauri signer generate -- -w $keyFile
+# Call the locally installed Tauri CLI directly. npm can interpret -w as its own
+# --workspace option, preventing generation of the signing keys.
+$tauriCli = Join-Path $PSScriptRoot 'node_modules\.bin\tauri.cmd'
+if (-not (Test-Path $tauriCli)) { throw 'Local Tauri CLI not found after npm install.' }
+& $tauriCli signer generate --write-keys $keyFile
 if ($LASTEXITCODE -ne 0) { throw 'Key generation failed.' }
 $publicKey = (Get-Content "$keyFile.pub" -Raw).Trim()
 $configPath = 'src-tauri/tauri.conf.json'
