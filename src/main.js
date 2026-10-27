@@ -1,3 +1,6 @@
+import ZANKOU_ART from './assets/zankou-reference.webp';
+import ZANKOU_AVATAR from './assets/zankou-avatar.webp';
+import { bundledArtworkFor, remoteArtworkFor } from './roster-art.js';
 import { invoke } from '@tauri-apps/api/core';
 import { save as nativeSave, open } from '@tauri-apps/plugin-dialog';
 'use strict';
@@ -10,6 +13,7 @@ const blank=()=>({characters:[],arcs:[],achievements:[]});
 function normalizeStore(o){let t=blank();for(let k of Object.keys(t))t[k]=Array.isArray(o?.[k])?o[k].filter(x=>x&&typeof x==='object'):[];for(let c of t.characters){c.skills=c.skills||{};c.gift=c.gift||null;if(c.bond===undefined)c.bond=null;}return t}
 
 let state=blank(),tab='overview',editId=null,filters={search:'',category:'all',status:'all',sort:'name'},toastTimer;
+let selectedCharacterId=null,characterRosterFilter='all',characterRosterSort='selected';
 function uid(){return typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():'item-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2)}
 function n(v){if(v===null||v===undefined||v==='')return null;let k=Number(String(v).replace(',','.'));return Number.isFinite(k)?Math.max(0,Math.floor(k)):null}
 function disp(v){return v===null||v===undefined||v===''?'—':String(v)}
@@ -62,15 +66,15 @@ let maxChars=cs.filter(c=>c.level>=80).length;let maxArcs=ar.filter(a=>a.tier>=5
 $('#metrics').innerHTML=[metric('Characters',cs.length,`${maxChars} at Level 80+`,'♟'),metric('Arcs',ar.length,`${maxArcs} at Tier 5+`,'◇'),metric('Bond records',b,`${cs.filter(c=>c.bond>=10&&c.bond!==null).length} at Bond Level 10+`,'♡'),metric('Achievements',`${done} / ${ach.length}`,ach.length?`${Math.round(done/ach.length*100)}% completed`:'No entries','★',ach.length?done/ach.length*100:0)].join('');
 $('#nav-characters').textContent=cs.length;$('#nav-arcs').textContent=ar.length;$('#nav-bonds').textContent=b;$('#nav-achievements').textContent=ach.length;
 }
-function setupTab(t){tab=t;filters={search:'',category:'all',status:'all',sort:'name'};$('#search').value='';for(let b of document.querySelectorAll('[data-tab]')){b.classList.toggle('active',b.dataset.tab===t);b.setAttribute('aria-current',b.dataset.tab===t?'page':'false')}
-let ti=TITLES[t];$('#page-title').textContent=ti[0];$('#page-subtitle').textContent=ti[1];$('#list-heading').textContent=ti[2];$('#list-description').textContent=ti[3];$('#toolbar').classList.toggle('hidden',t==='overview');$('#csv-main').classList.toggle('hidden',t==='overview');$('#add-main').classList.toggle('hidden',t==='overview'||t==='bonds');$('#add-main').textContent=t==='characters'?'＋ New Character':t==='arcs'?'＋ New Arc':'＋ New Achievement';
+function setupTab(t){tab=t;document.querySelector('.app').dataset.view=t;filters={search:'',category:'all',status:'all',sort:'name'};$('#search').value='';for(let b of document.querySelectorAll('[data-tab]')){b.classList.toggle('active',b.dataset.tab===t);b.setAttribute('aria-current',b.dataset.tab===t?'page':'false')}
+let ti=TITLES[t];$('#page-title').textContent=ti[0];$('#page-subtitle').textContent=ti[1];$('#list-heading').textContent=ti[2];$('#list-description').textContent=ti[3];$('#toolbar').classList.toggle('hidden',t==='overview'||t==='characters');$('#csv-main').classList.toggle('hidden',t==='overview');$('#add-main').classList.toggle('hidden',t==='overview'||t==='bonds'||t==='characters');$('#add-main').textContent=t==='characters'?'＋ New Character':t==='arcs'?'＋ New Arc':'＋ New Achievement';
 $('#category-filter').hidden=t!=='achievements';$('#status-filter').hidden=t!=='achievements';$('#status-filter').value='all';let opts=t==='characters'?[['name','Name A–Z'],['level','Highest level'],['bond','Highest Bond'],['awakening','Highest Awakening']]:t==='arcs'?[['name','Name A–Z'],['tier','Highest Tier'],['level','Highest Level']]:t==='bonds'?[['name','Name A–Z'],['bond','Highest Bond'],['store','Store'],['price','Highest gift price']]:[['name','Name A–Z'],['category','Category'],['progress','Highest progress'],['rarity','Rarity']];$('#sort').innerHTML=opts.map(([k,v])=>`<option value="${k}">${v}</option>`).join('');$('#search').placeholder=t==='characters'?'Search characters...':t==='arcs'?'Search Arcs...':t==='bonds'?'Search character, gift, store, area...':'Search achievements...';render()}
 function setupCategories(){let v=[...new Set(state.achievements.map(a=>a.category||'Uncategorized'))].sort();if(filters.category!=='all'&&!v.includes(filters.category))filters.category='all';$('#category-filter').innerHTML='<option value="all">All categories</option>'+v.map(x=>`<option value="${safe(x)}" ${filters.category===x?'selected':''}>${safe(x)}</option>`).join('')}
 function render(){renderMetrics();if(tab==='overview'){renderOverview();return}if(tab==='achievements')setupCategories();let list=(tab==='bonds'?state.characters:state[tab]).slice(),q=filters.search.toLowerCase();if(q)list=list.filter(x=>{let h=tab==='characters'?[x.name,x.notes]:tab==='arcs'?[x.name,x.owner,x.notes]:tab==='bonds'?[x.name,x.gift?.name,x.gift?.store,x.gift?.location,x.gift?.interactions]:[x.name,x.category,x.description,x.rarity,x.observation];return h.join(' ').toLowerCase().includes(q)});
 if(tab==='achievements'){if(filters.category!=='all')list=list.filter(a=>(a.category||'Uncategorized')===filters.category);if(filters.status==='done')list=list.filter(a=>achData(a).complete);if(filters.status==='todo')list=list.filter(a=>!achData(a).complete)}
 let key=filters.sort;list.sort((a,b)=>{let av=key==='progress'?achData(a).percent:key==='store'?a.gift?.store:key==='price'?a.gift?.price:a[key];let bv=key==='progress'?achData(b).percent:key==='store'?b.gift?.store:key==='price'?b.gift?.price:b[key];if(['level','tier','awakening','bond','price','progress'].includes(key))return (bv??-1)-(av??-1)||String(a.name).localeCompare(String(b.name),'en');return String(av??'').localeCompare(String(bv??''),'en')||String(a.name).localeCompare(String(b.name),'en')});
-const total=tab==='bonds'?state.characters.length:state[tab].length;$('#count-line').textContent=`${list.length} shown · ${total} total`;
-$('#content').innerHTML=list.length?(tab==='characters'?`<div class="cards">${list.map(characterCard).join('')}</div>`:tab==='arcs'?`<div class="cards">${list.map(arcCard).join('')}</div>`:tab==='bonds'?`<div class="bond-grid">${list.map(bondCard).join('')}</div>`:`<div class="ach-list">${list.map(achievementCard).join('')}</div>`):emptyState(total>0)}
+const total=tab==='bonds'?state.characters.length:state[tab].length;$('#count-line').textContent=`${list.length} shown · ${total} total`;const oldRosterScroll=$('#roster-rows')?.scrollTop??null;
+$('#content').innerHTML=tab==='characters'?renderCharacterWorkspace():list.length?(tab==='arcs'?`<div class="cards">${list.map(arcCard).join('')}</div>`:tab==='bonds'?`<div class="bond-grid">${list.map(bondCard).join('')}</div>`:`<div class="ach-list">${list.map(achievementCard).join('')}</div>`):emptyState(total>0);if(tab==='characters'&&oldRosterScroll!==null&&$('#roster-rows'))$('#roster-rows').scrollTop=oldRosterScroll;}
 function renderOverview(){let incomplete=state.characters.filter(c=>c.bond!==null&&c.bond<10).sort((a,b)=>b.bond-a.bond).slice(0,7),unknown=state.characters.filter(c=>c.bond===null),done=state.achievements.filter(a=>achData(a).complete).length;
 const entries=state.achievements.map(a=>({a,d:achData(a)})).filter(x=>!x.d.complete&&x.d.percent!==null).sort((a,b)=>b.d.percent-a.d.percent).slice(0,6),tier5=state.arcs.filter(a=>a.tier>=5).length,level80=state.arcs.filter(a=>a.level>=80).length;
 $('#count-line').textContent='Original workbook: Sheet 1 (Characters + Arcs) • Sheet 2 (Bond & Gifts) • Sheet 3 (Achievements)';
@@ -82,6 +86,98 @@ $('#content').innerHTML=`<div class="overview-banner"><div class="overview-label
 function actionBtn(id,kind){return `<div class="mini-actions"><button class="icon-btn" data-action="edit" data-kind="${kind}" data-id="${safe(id)}" title="Edit" aria-label="Edit">✎</button><button class="icon-btn" data-action="delete" data-kind="${kind}" data-id="${safe(id)}" title="Delete" aria-label="Delete">✕</button></div>`}
 function stepper(kind,id,field,value){return `<span class="stepper"><button data-action="step" data-kind="${kind}" data-id="${safe(id)}" data-field="${safe(field)}" data-delta="-1" aria-label="Decrease ${safe(field)}" ${n(value)===null?'disabled':''}>−</button><span>${safe(disp(value))}</span><button data-action="step" data-kind="${kind}" data-id="${safe(id)}" data-field="${safe(field)}" data-delta="1" aria-label="Increase ${safe(field)}">+</button></span>`}
 function characterCard(c){let avatar=c.portrait&&PORTRAITS.get(c.portrait)?`<img src="${safe(PORTRAITS.get(c.portrait))}" alt="">`:'♟';let skills=SKILLS.map(([k,name])=>`<div class="skill-item"><span class="skill-label" title="${safe(name)}">${safe(name)}</span>${k==='life2'&&(c.skills?.life2===null||c.skills?.life2===undefined)?'<span class="empty-life">Optional · unset</span>':stepper('characters',c.id,'skills.'+k,c.skills?.[k])}</div>`).join('');return `<article class="entity-card"><div class="card-top"><div class="entity-id"><div class="avatar large">${avatar}</div><div><div class="entity-name">${safe(c.name)}</div><div class="entity-type">CHARACTER</div></div></div>${actionBtn(c.id,'characters')}</div><div class="pill-row"><span class="pill teal">Level <strong>${safe(disp(c.level))}</strong></span><span class="pill">Bond <strong>${safe(disp(c.bond))}</strong></span><span class="pill lilac">Awakening <strong>${safe(disp(c.awakening))}</strong></span></div><div class="skill-heading">SKILLS · CLICK + / − TO ADJUST</div><div class="skill-grid">${skills}</div>${c.gift?.name?`<button class="gift-shortcut" data-action="goto" data-target="bonds" data-search="${safe(c.name)}">♡ Preferred gift: ${safe(c.gift.name)} ↗</button>`:''}</article>`}
+
+// v1.2 — NTE-inspired three-column character command center.
+function charImage(c,kind='portrait'){
+  const custom=c.portrait&&PORTRAITS.get(c.portrait);
+  if(custom)return `<img src="${safe(custom)}" alt="${safe(c.name)} portrait">`;
+  const bundled=bundledArtworkFor(c.name);
+  if(bundled)return `<img src="${safe(bundled)}" alt="${safe(c.name)} character artwork" loading="lazy">`;
+  // Keep the existing reference crop for Zankou, including offline operation.
+  if(normalizedName(c.name)==='zankou')return `<img src="${kind==='avatar'?ZANKOU_AVATAR:ZANKOU_ART}" alt="Zankou (reference screenshot)">`;
+  const art=remoteArtworkFor(c.name);
+  if(art?.url){
+    const source=kind==='avatar'?(art.fallback||art.url):art.url;
+    const fallback=kind==='avatar'?art.url:(art.fallback||'');
+    return `<img class="remote-art" src="${safe(source)}" alt="${safe(c.name)} character artwork" loading="lazy" data-portrait-name="${safe(c.name)}" data-portrait-fallback="${safe(fallback)}" data-portrait-attempt="0">`;
+  }
+  return `<span class="portrait-placeholder" aria-hidden="true">${safe(c.name.slice(0,2).toUpperCase())}</span>`;
+}
+function visibleRoster(){
+  let list=state.characters.filter(c=>String(c.name||'').toLowerCase().includes(filters.search.toLowerCase()));
+  if(characterRosterFilter==='max-level')list=list.filter(c=>(c.level??0)>=80);
+  else if(characterRosterFilter==='needs-work')list=list.filter(c=>c.level===null||c.level===undefined||c.level<80);
+  return list.sort((a,b)=>characterRosterSort==='selected'?((Number(b.id===selectedCharacterId)-Number(a.id===selectedCharacterId))||a.name.localeCompare(b.name,'en')):characterRosterSort==='level'?((b.level??-1)-(a.level??-1)||a.name.localeCompare(b.name,'en')):a.name.localeCompare(b.name,'en'));
+}
+function rosterRows(list){return list.map(c=>`<button type="button" class="roster-row ${c.id===selectedCharacterId?'selected':''}" data-action="select-character" data-id="${safe(c.id)}" aria-pressed="${c.id===selectedCharacterId}">
+  <span class="roster-avatar">${charImage(c,'avatar')}</span><span class="roster-data"><b>${safe(c.name)}</b><small>LV. ${safe(disp(c.level))} <i>✦</i> Bond ${safe(disp(c.bond))}</small></span><span class="roster-chevron">›</span></button>`).join('')||'<div class="roster-empty">No matching characters.</div>'}
+function renderRosterOnly(){
+  const list=visibleRoster();
+  const rows=$('#roster-rows');if(!rows)return;
+  rows.innerHTML=rosterRows(list);
+  const count=$('#roster-count');if(count)count.textContent=`${list.length} / ${state.characters.length}`;
+  // Keep focus and text cursor when searching. Only the matching roster changes.
+}
+function charSkill(c,key,label,icon){const value=c.skills?.[key];return `<div class="nte-skill">
+  <span class="skill-disc">${icon}</span><div class="skill-meta"><b>${safe(label)}</b><small>LVL ${safe(disp(value))}${value===null||value===undefined?' · Not set':''}</small></div>
+  ${stepper('characters',c.id,'skills.'+key,value)}</div>`}
+function renderCharacterWorkspace(){
+  if(!selectedCharacterId||!state.characters.some(c=>c.id===selectedCharacterId))selectedCharacterId=state.characters.find(c=>normalizedName(c.name)==='zankou')?.id||state.characters[0]?.id||null;
+  let roster=visibleRoster();
+  const c=state.characters.find(x=>x.id===selectedCharacterId);
+  $('#count-line').textContent=`${state.characters.length} characters registered // Select a character to inspect their progress`;
+  if(!c)return `<div class="empty-state"><div class="empty-icon">✦</div><h3>Your character archive is empty</h3><p>Add your first character to start tracking.</p><button class="btn primary" data-action="add" data-kind="characters">+ Add Character</button></div>`;
+  const linked=state.arcs.filter(a=>normalizedName(a.owner)===normalizedName(c.name));
+  const g=c.gift||{};
+  const avatar=charImage(c,'portrait');
+  const level=Math.max(0,Math.min(100,(c.level??0)/80*100));
+  const awk=Math.max(0,Math.min(6,c.awakening??0));
+  const stars=Array.from({length:6},(_,i)=>`<span class="awakening-star ${i<awk?'lit':''}">✦</span>`).join('');
+  return `<div class="character-workspace">
+  <aside class="roster-panel nte-panel">
+    <div class="ribbon-header"><span class="ribbon-kicker">/// UNIT ARCHIVE</span><strong>CHARACTERS</strong><span class="ribbon-decoration">NTE</span></div>
+    <div class="roster-control"><label class="roster-search">⌕ <input id="roster-search" type="search" autocomplete="off" placeholder="Search characters..." value="${safe(filters.search)}"></label><select id="roster-sort" aria-label="Sort characters"><option value="selected" ${characterRosterSort==='selected'?'selected':''}>Selected</option><option value="name" ${characterRosterSort==='name'?'selected':''}>A–Z</option><option value="level" ${characterRosterSort==='level'?'selected':''}>Level ↓</option></select></div>
+    <div class="roster-pills"><button data-action="char-filter" data-value="all" class="${characterRosterFilter==='all'?'active':''}">All</button><button data-action="char-filter" data-value="max-level" class="${characterRosterFilter==='max-level'?'active':''}">Lv. 80+</button><button data-action="char-filter" data-value="needs-work" class="${characterRosterFilter==='needs-work'?'active':''}">Below 80</button></div>
+    <div class="roster-index">UNIT ROSTER <span id="roster-count">${roster.length} / ${state.characters.length}</span></div>
+    <div class="roster-rows" id="roster-rows">${rosterRows(roster)}</div>
+    <button type="button" class="add-roster" data-action="add" data-kind="characters">＋ ADD CHARACTER</button>
+  </aside>
+  <section class="profile-center">
+    <article class="hero-card nte-panel">
+      <div class="hero-background-mark">NEVERNESS</div><div class="hero-diagonal">EVERNESS // UNIT PROFILE</div>
+      <div class="hero-portrait ${!c.portrait&&(bundledArtworkFor(c.name)||remoteArtworkFor(c.name))?'catalog-portrait':''} ${c.portrait?'custom':''} ${normalizedName(c.name)==='zankou'&&!c.portrait?'reference-portrait':''}">${avatar}</div>
+      <div class="hero-identity"><div class="hero-overline">CHARACTER DATABASE <span>/// ${safe(String(state.characters.indexOf(c)+1).padStart(3,'0'))}</span></div><h2>${safe(c.name)}</h2><div class="hero-level"><b>LVL <span>${safe(disp(c.level))}</span></b><span class="level-slash">/ 80</span></div><div class="hero-progress"><span style="width:${level}%"></span></div><div class="hero-star-row">${stars}</div><div class="hero-buttons"><button class="btn primary small" data-action="edit" data-kind="characters" data-id="${safe(c.id)}">✎ EDIT PROFILE / PHOTO</button><button class="btn ghost small" data-action="delete" data-kind="characters" data-id="${safe(c.id)}">✕ Delete</button></div></div>
+      <div class="hero-bottom-strip"><span>PERSONAL TRACKER</span><span>LOCAL DATABASE <i>●</i> SYNCED</span></div>
+    </article>
+    <article class="ability-panel nte-panel">
+      <div class="panel-sticker"><span>01 / COMBAT</span><h3>ESPER ABILITY</h3><span class="sticker-check">✦ TRACK SKILLS</span></div>
+      <div class="ability-grid">${charSkill(c,'basic','Basic Attack','⚔')}${charSkill(c,'redirect','Redirect Skill','➠')}${charSkill(c,'ultimate','Ultimate Skill','✹')}${charSkill(c,'support','Support Skill','✧')}${charSkill(c,'esper','Esper Cycle Upgrade','◎')}${charSkill(c,'passive','Combat Passive','◈')}</div>
+      <div class="life-header"><span class="life-sticker">LIFE SKILLS</span><span class="life-note">SIDE PROGRESSION //</span></div>
+      <div class="ability-grid life-grid">${charSkill(c,'life1','Life Skill 1','✿')}${c.skills?.life2===null||c.skills?.life2===undefined?`<div class="nte-skill optional"><span class="skill-disc">⊘</span><div class="skill-meta"><b>Life Skill 2</b><small>Optional / not assigned</small></div><button data-action="edit" data-kind="characters" data-id="${safe(c.id)}" class="btn ghost small">Set up</button></div>`:charSkill(c,'life2','Life Skill 2','✿')}</div>
+    </article>
+  </section>
+  <aside class="inspector-column">
+    <article class="inspector-card nte-panel"><div class="inspector-title"><span>◈</span><h3>CHARACTER STATUS</h3><small>01</small></div>
+      <div class="stat-strip"><div>LEVEL</div><strong>${safe(disp(c.level))}<span> / 80</span></strong></div>
+      <div class="inspector-meter"><span style="width:${level}%"></span></div>
+      <div class="stat-strip"><div>AWAKENING</div><strong>Lv. ${safe(disp(c.awakening))}</strong></div>
+      <div class="awakening-chain">${Array.from({length:6},(_,i)=>`<span class="awaken-dot ${i<awk?'active':''}">${i<awk?'✦':i+1}</span>`).join('')}</div>
+      <div class="stat-adjust"><span>Adjust Awakening</span>${stepper('characters',c.id,'awakening',c.awakening)}</div>
+    </article>
+    <article class="inspector-card nte-panel"><div class="inspector-title"><span>♡</span><h3>BOND &amp; GIFTS</h3><small>02</small></div>
+      <div class="bond-hero-number"><span>AFFECTION LEVEL</span><b>${safe(disp(c.bond))}</b>${stepper('bonds',c.id,'bond',c.bond)}</div>
+      <div class="pink-divider"></div><div class="gift-info"><span>FAVORITE GIFT</span><strong>${safe(g.name||'Not specified')}</strong></div>
+      <div class="gift-stats"><div><span>Gift value</span><b>${safe(disp(g.affection))}</b></div><div><span>Price</span><b>${safe(disp(g.price))}</b></div></div>
+      <button type="button" class="inspector-link" data-action="edit" data-kind="bonds" data-id="${safe(c.id)}">EDIT AFFECTION DETAILS ↗</button>
+    </article>
+    <article class="inspector-card nte-panel"><div class="inspector-title"><span>▣</span><h3>LINKED ARCS</h3><small>03</small></div>
+      ${linked.length?linked.slice(0,4).map(a=>`<div class="linked-arc"><span class="arc-orbit">◇</span><div><b>${safe(a.name)}</b><small>LV. ${safe(disp(a.level))} / TIER ${safe(disp(a.tier))}</small></div></div>`).join(''):'<p class="inspector-empty">No Arcs linked to this character yet.</p>'}
+      <button type="button" class="inspector-link" data-action="goto" data-target="arcs">OPEN ARC COLLECTION ↗</button>
+    </article>
+    ${c.notes?`<div class="character-notes"><span>/// PERSONAL NOTES</span><p>${safe(c.notes)}</p></div>`:''}
+  </aside>
+</div>`;
+}
 function arcCard(a){return `<article class="entity-card arc-card"><div class="card-top"><div class="entity-id"><div class="avatar arc-avatar">◇</div><div><div class="entity-name">${safe(a.name)}</div><div class="entity-type">ARC</div></div></div>${actionBtn(a.id,'arcs')}</div><div class="arc-stats"><div class="arc-stat"><div class="arc-stat-name">Level</div><div class="arc-stat-bottom"><div class="arc-stat-value">${safe(disp(a.level))}</div>${stepper('arcs',a.id,'level',a.level)}</div></div><div class="arc-stat"><div class="arc-stat-name">Tier</div><div class="arc-stat-bottom"><div class="arc-stat-value">${safe(disp(a.tier))}</div>${stepper('arcs',a.id,'tier',a.tier)}</div></div></div>${a.owner?`<div class="arc-owner">Linked Character: <strong>${safe(a.owner)}</strong></div>`:''}</article>`}
 function bondCard(c){let g=c.gift||{};return `<article class="bond-card"><div class="bond-top"><div><div class="entity-type">AFFECTION / GIFT INFO</div><h3>${safe(c.name)}</h3></div><button class="btn small" data-action="edit" data-kind="bonds" data-id="${safe(c.id)}">✎ Edit</button></div><div class="bond-level"><div><span>Bond Level</span><div class="bond-level-number">${safe(disp(c.bond))}</div></div>${stepper('bonds',c.id,'bond',c.bond)}</div><div class="bond-progress"><span style="width:${c.bond===null?0:Math.min(100,c.bond*10)}%"></span></div><div class="bond-gift-title">♡ ${safe(g.name||'Gift not specified')}</div><div class="bond-details"><div><small>Gift price</small><b>${g.price===null||g.price===undefined?'—':Number(g.price).toLocaleString('en-US')}</b></div><div><small>Affection value</small><b>${safe(disp(g.affection))}</b></div><div><small>Store</small><b>${safe(disp(g.store))}</b></div><div><small>Location</small><b>${safe(disp(g.location))}</b></div><div><small>Dateable?</small><b>${safe(disp(g.dateable))}</b></div><div><small>Interactions</small><b>${safe(disp(g.interactions))}</b></div></div>${g.sourceName&&g.sourceName!==c.name?`<div class="bond-footnote">Workbook alias: ${safe(g.sourceName)}</div>`:''}</article>`}
 function achievementCard(a){let d=achData(a),percent=d.percent;return `<article class="achievement ${d.complete?'done':''}"><div><div class="ach-head"><h3>${safe(a.name)}</h3><span class="ach-category">${safe(a.category||'Uncategorized')}</span>${a.rarity?`<span class="ach-rarity">${safe(a.rarity)}</span>`:''}</div>${a.description?`<p class="ach-desc">${safe(a.description)}</p>`:''}${a.observation?`<p class="ach-obs"><b>Observation:</b> ${safe(a.observation)}</p>`:''}${d.linked?`<span class="auto-pill">↻ Auto-tracked from ${safe(d.linked.character)}'s Bond</span>`:''}</div><div class="achievement-progress"><div class="ach-progress-label"><span>PROGRESS</span><strong>${safe(disp(d.current))} / ${safe(disp(d.target))} · ${d.complete?'Completed':percent===null?'Not tracked':percent+'%'}</strong></div><div class="progress-track"><div class="progress-fill" style="width:${d.complete?100:percent||0}%"></div></div><div class="ach-progress-actions">${d.linked?'<span class="panel-muted">Bond-linked</span>':stepper('achievements',a.id,'current',a.current)}<label class="complete-checkbox"><input type="checkbox" data-action="complete" data-id="${safe(a.id)}" ${d.complete?'checked':''}> Completed</label></div></div><div class="ach-actions">${actionBtn(a.id,'achievements')}</div></article>`}
@@ -111,7 +207,7 @@ if(kind==='bonds'){if(!prev)return;prev.bond=n(fd.get('bond'));let g=prev.gift||
   row.notes=String(fd.get('notes')||'').trim();row.skills={};for(let [key] of SKILLS)row.skills[key]=key==='life2'&&!$('#life2-toggle').checked?null:n(fd.get('skill_'+key));
 }else if(kind==='arcs'){row.level=n(fd.get('level'));row.tier=n(fd.get('tier'));row.owner=String(fd.get('owner')||'').trim()||null;row.notes=String(fd.get('notes')||'').trim();
 }else{row.category=String(fd.get('category')||'').trim();row.description=String(fd.get('description')||'').trim();row.rarity=String(fd.get('rarity')||'').trim()||null;row.current=n(fd.get('current'));row.target=n(fd.get('target'));row.observation=String(fd.get('observation')||'').trim()||null;row.autoBond=fd.get('autoBond')==='on';row.completed=fd.get('completed')==='on';}
-if(prev)Object.assign(prev,row);else state[kind].push(row)}if(!await save())return;$('#editor-dialog').close();render();toast(prev?'Changes saved.':'Entry added.')}
+if(prev)Object.assign(prev,row);else state[kind].push(row);if(kind==='characters')selectedCharacterId=row.id;}if(!await save())return;$('#editor-dialog').close();render();toast(prev?'Changes saved.':'Entry added.')}
 function changeStep(kind,id,field,delta){let x=(kind==='bonds'?state.characters:state[kind])?.find(e=>e.id===id);if(!x)return;let target=x,key=field;if(field.startsWith('skills.')){target=x.skills||{};key=field.slice(7)}let before=n(target[key]);if(before===null&&delta<0)return;target[key]=Math.max(0,(before??0)+delta);if(kind==='achievements'&&field==='current'&&x.completed&&x.target!==null&&target[key]<x.target)x.completed=false;save();render()}
 function removeItem(kind,id){if(kind==='bonds'){toast('Edit the Bond details from this section.');return}let x=state[kind]?.find(v=>v.id===id);if(!x)return;if(!confirm(`Delete “${x.name}”? You can only recover it from a backup.`))return;state[kind]=state[kind].filter(v=>v.id!==id);save();render();toast('Entry deleted.')}
 function download(text,file,mime){let blob=new Blob([text],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=file;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
@@ -129,13 +225,28 @@ else{let obj={name,category:get(r,'Category'),description:get(r,'Description'),r
 if(!updated)throw Error('No matching entries could be imported.');save();setupTab(kind);toast(`${updated} records imported from CSV.`)}
 function handleImport(ev){let file=ev.target.files?.[0];ev.target.value='';if(!file)return;file.text().then(async s=>{try{if(file.name.toLowerCase().endsWith('.json')){let obj=JSON.parse(s);if(!Array.isArray(obj.characters)||!Array.isArray(obj.arcs)||!Array.isArray(obj.achievements))throw Error('Not an NTE Tracker JSON backup.');if(!confirm('Replace all current entries with this JSON backup?'))return;if((await saveQueue)===false)throw Error('Previous changes could not be saved.');let next=normalizeStore(obj);await invoke('restore_json',{data:next});state=next;await hydratePortraits();setupTab(tab);toast('JSON backup restored; safety ZIP was created.')}else if(file.name.toLowerCase().endsWith('.csv')){if(!confirm('Import CSV entries? Existing records with matching names will be updated.'))return;importCsv(s)}else throw Error('Please choose a .json or .csv file.')}catch(err){alert('Could not import file: '+err.message)}}).catch(err=>alert('Could not read file: '+err.message))}
 document.addEventListener('click',async e=>{let nav=e.target.closest('[data-tab]');if(nav){setupTab(nav.dataset.tab);return}let el=e.target.closest('[data-action]');if(!el)return;let action=el.dataset.action,kind=el.dataset.kind||tab,id=el.dataset.id;
-if(action==='goto'){setupTab(el.dataset.target);if(el.dataset.search){$('#search').value=el.dataset.search;filters.search=el.dataset.search;render()}window.scrollTo({top:0,behavior:'smooth'})}
-else if(action==='add')openEditor(tab);else if(action==='edit')openEditor(kind,(kind==='bonds'?state.characters:state[kind])?.find(x=>x.id===id));else if(action==='delete')removeItem(kind,id);else if(action==='step')changeStep(kind,id,el.dataset.field,Number(el.dataset.delta));else if(action==='close-modal')$('#editor-dialog').close();else if(action==='export-json')backup();else if(action==='backup-zip')await backupZip();else if(action==='restore-zip')await restoreZip();else if(action==='show-data-directory'){alert('Your permanent data folder:\n'+await invoke('get_data_directory')+'\n\nSQLite database: nte.sqlite3\nPortraits: portraits/\nAutomatic archives: backups/');}else if(action==='export-csv')exportCsv();else if(action==='import')$('#file-input').click();else if(action==='reset-filters'){filters={search:'',category:'all',status:'all',sort:'name'};$('#search').value='';$('#status-filter').value='all';$('#sort').value='name';render()}
+if(action==='select-character'){selectedCharacterId=id;render();}
+else if(action==='char-filter'){characterRosterFilter=el.dataset.value||'all';render();}
+else if(action==='goto'){setupTab(el.dataset.target);if(el.dataset.search){$('#search').value=el.dataset.search;filters.search=el.dataset.search;render()}window.scrollTo({top:0,behavior:'smooth'})}
+else if(action==='add')openEditor(el.dataset.kind||tab);else if(action==='edit')openEditor(kind,(kind==='bonds'?state.characters:state[kind])?.find(x=>x.id===id));else if(action==='delete')removeItem(kind,id);else if(action==='step')changeStep(kind,id,el.dataset.field,Number(el.dataset.delta));else if(action==='close-modal')$('#editor-dialog').close();else if(action==='export-json')backup();else if(action==='backup-zip')await backupZip();else if(action==='restore-zip')await restoreZip();else if(action==='show-data-directory'){alert('Your permanent data folder:\n'+await invoke('get_data_directory')+'\n\nSQLite database: nte.sqlite3\nPortraits: portraits/\nAutomatic archives: backups/');}else if(action==='export-csv')exportCsv();else if(action==='import')$('#file-input').click();else if(action==='reset-filters'){filters={search:'',category:'all',status:'all',sort:'name'};$('#search').value='';$('#status-filter').value='all';$('#sort').value='name';render()}
 else if(action==='reset-excel'){if(confirm('Restore the original Excel snapshot? This REPLACES your current changes. Download a JSON backup first.')){if((await saveQueue)===false)return;try{state=normalizeStore(await invoke('reset_to_excel'));await hydratePortraits();setupTab('overview');toast('Original Excel data restored.');}catch(err){alert('Reset failed: '+String(err));}}}
 else if(action==='clear'){if(confirm('Clear ALL local entries? Back up your data first.')&&confirm('This removes all records from SQLite. A daily backup may still exist. Continue?')){state=blank();save();setupTab('overview');toast('Local entries cleared.')}}});
-document.addEventListener('change',e=>{if(e.target.dataset.action==='complete'){let a=state.achievements.find(x=>x.id===e.target.dataset.id);if(!a)return;if(a.autoBond&&bondAchievement(a)&&!e.target.checked){a.autoBond=false;a.completed=false;}else a.completed=e.target.checked;save();render()}});
+document.addEventListener('change',e=>{if(e.target.id==='roster-sort'){characterRosterSort=e.target.value;render();return}if(e.target.dataset.action==='complete'){let a=state.achievements.find(x=>x.id===e.target.dataset.id);if(!a)return;if(a.autoBond&&bondAchievement(a)&&!e.target.checked){a.autoBond=false;a.completed=false;}else a.completed=e.target.checked;save();render()}});
+document.addEventListener('input',e=>{if(e.target.id==='roster-search'){filters.search=e.target.value.trim();renderRosterOnly();}});
 $('#editor-form').addEventListener('submit',handleForm);$('#file-input').addEventListener('change',handleImport);$('#search').addEventListener('input',e=>{filters.search=e.target.value.trim();render()});$('#sort').addEventListener('change',e=>{filters.sort=e.target.value;render()});$('#category-filter').addEventListener('change',e=>{filters.category=e.target.value;render()});$('#status-filter').addEventListener('change',e=>{filters.status=e.target.value;render()});
-document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!$('#editor-dialog').open){e.preventDefault();$('#search').focus()}});
+// If a character-art host is unavailable, try the alternate source then use initials.
+// This does not affect the database or any user-uploaded portrait.
+document.addEventListener('error',e=>{
+  const img=e.target;
+  if(!(img instanceof HTMLImageElement)||!img.classList.contains('remote-art'))return;
+  const fallback=img.dataset.portraitFallback||'';
+  if(img.dataset.portraitAttempt==='0'&&fallback&&fallback!==img.src){
+    img.dataset.portraitAttempt='1';img.src=fallback;return;
+  }
+  const initial=document.createElement('span');initial.className='portrait-placeholder';initial.setAttribute('aria-hidden','true');
+  initial.textContent=(img.dataset.portraitName||'??').slice(0,2).toUpperCase();img.replaceWith(initial);
+},true);
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!$('#editor-dialog').open){e.preventDefault();(tab==='characters'?$('#roster-search'):$('#search'))?.focus()}});
 // The updater waits for the SQLite write queue before creating a pre-update ZIP.
 window.nteBeforeUpdate = async () => (await saveQueue) !== false;
 bootstrap();

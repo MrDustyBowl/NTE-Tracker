@@ -9,3 +9,6 @@ src-tauri/gen/schemas/
 *.key
 *.key.pub
 .env*
+
+# Optional local game character art; do not publish unlicensed files
+src/assets/roster/*

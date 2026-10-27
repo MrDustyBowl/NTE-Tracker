@@ -8,7 +8,7 @@ const fakePicture={size:8,async arrayBuffer(){return Uint8Array.from([137,80,78,
 let fakeFields={name:'New Character',level:'1',bond:'0',awakening:'0',portraitFile:fakePicture,notes:'Brand new release'};
 const elements=new Map(),listeners={};
 function el(s){if(!elements.has(s))elements.set(s,{innerHTML:'',textContent:'',value:'',hidden:false,style:{},dataset:{},classList:{toggle(){},add(){},remove(){}},setAttribute(){},addEventListener(n,cb){listeners[s+'::'+n]=cb},focus(){},showModal(){this.open=true},close(){this.open=false},querySelector(a){return el('sub'+a)},lastChild:{textContent:''}});return elements.get(s)}
-const context={console,setTimeout,clearTimeout,crypto:require('crypto').webcrypto,
+const context={console,setTimeout,clearTimeout,ZANKOU_ART:'zankou-reference.webp',ZANKOU_AVATAR:'zankou-avatar.webp',bundledArtworkFor:()=>null,remoteArtworkFor:(name)=>({url:'https://www.ntegame.com/'+name+'.png',fallback:'https://cdn.prydwen.gg/'+name+'.webp'}),HTMLImageElement:class {},crypto:require('crypto').webcrypto,
  FormData:class {get(k){return Object.hasOwn(fakeFields,k)?fakeFields[k]:null}},
  document:{querySelector:el,querySelectorAll(){return []},addEventListener(n,cb){listeners['doc::'+n]=cb}},
  window:{scrollTo(){}},confirm:()=>true,alert:err=>{throw Error(err)},
@@ -21,7 +21,8 @@ function action(dataset){return listeners['doc::click']({target:{closest(sel){re
 (async()=>{
 await settle();
 assert(el('#metrics').innerHTML.includes('24'),'seed loaded');
-tab('characters');assert((el('#content').innerHTML.match(/entity-card/g)||[]).length===24);
+tab('characters');assert((el('#content').innerHTML.match(/class=\"roster-row /g)||[]).length===24);assert(el('#content').innerHTML.includes('ESPER ABILITY'));assert(el('#content').innerHTML.includes('LINKED ARCS')); assert(el('#content').innerHTML.includes('<h2>Zankou</h2>'), 'selected Zankou showcase');
+await action({action:'select-character',id:db.characters.find(c=>c.name==='Sakiri').id});assert(el('#content').innerHTML.includes('<h2>Sakiri</h2>'),'roster selection updates live character profile');assert(el('#content').innerHTML.includes('remote-art'), 'online art fallback added'); 
 tab('arcs');assert(el('#content').innerHTML.includes('Us.'));
 tab('achievements');assert(el('#content').innerHTML.includes('Eternal Home'));
 tab('bonds');assert(el('#content').innerHTML.includes('Golden Moon'));

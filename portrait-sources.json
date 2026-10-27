@@ -1,0 +1,146 @@
+[
+  {
+    "name": "Adler",
+    "slug": "adler",
+    "url": "https://www.ntegame.com/images/characters/adler/yh_lihui_character_adele.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/adler_card.webp"
+  },
+  {
+    "name": "Akane",
+    "slug": "akane",
+    "url": "https://cdn.prydwen.gg/images/nte/characters/akane-rin_full.webp",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/akane-rin_card.webp"
+  },
+  {
+    "name": "Aurelia",
+    "slug": "aurelia",
+    "url": "https://www.ntegame.com/images/characters/aurelia/yh_lihui_fashionshop_haiyue1.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/aurelia_card.webp"
+  },
+  {
+    "name": "Baicang",
+    "slug": "baicang",
+    "url": "https://www.ntegame.com/images/characters/baicang/yh_lihui_character_baizhang.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/baicang_card.webp"
+  },
+  {
+    "name": "Blackbird",
+    "slug": "blackbird",
+    "url": "https://cdn.prydwen.gg/images/nte/characters/blackbird_full.webp",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/blackbird_card.webp"
+  },
+  {
+    "name": "Chaos",
+    "slug": "chaos",
+    "url": "https://www.ntegame.com/images/characters/chaos/chaos_avatar.webp",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/chaos_card.webp"
+  },
+  {
+    "name": "Chiz",
+    "slug": "chiz",
+    "url": "https://www.ntegame.com/images/characters/chiz/yh_lihui_character_xiaozhi.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/chiz_card.webp"
+  },
+  {
+    "name": "Daffodill",
+    "slug": "daffodill",
+    "url": "https://www.ntegame.com/images/characters/daffodill/yh_lihui_character_dafudier.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/daffodill_card.webp"
+  },
+  {
+    "name": "Edgar",
+    "slug": "edgar",
+    "url": "https://www.ntegame.com/images/characters/edgar/yh_lihui_character_aidejia.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/edgar_card.webp"
+  },
+  {
+    "name": "Fadia",
+    "slug": "fadia",
+    "url": "https://www.ntegame.com/images/characters/fadia/yh_lihui_character_fadiya.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/fadia_card.webp"
+  },
+  {
+    "name": "Haniel",
+    "slug": "haniel",
+    "url": "https://www.ntegame.com/images/characters/haniel/yh_lihui_character_haniya.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/haniel_card.webp"
+  },
+  {
+    "name": "Hathor",
+    "slug": "hathor",
+    "url": "https://www.ntegame.com/images/characters/hathor/yh_lihui_character_hahuosuoer.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/hathor_card.webp"
+  },
+  {
+    "name": "Hotori",
+    "slug": "hotori",
+    "url": "https://www.ntegame.com/images/characters/hotori/yh_lihui_character_xun.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/hotori_card.webp"
+  },
+  {
+    "name": "Iroi",
+    "slug": "iroi",
+    "url": "https://cdn.prydwen.gg/images/nte/characters/iroi_full.webp",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/iroi_card.webp"
+  },
+  {
+    "name": "Jiuyuan",
+    "slug": "jiuyuan",
+    "url": "https://www.ntegame.com/images/characters/jiuyuan/yh_lihui_character_jiuyuan.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/jiuyuan_card.webp"
+  },
+  {
+    "name": "Lacrimosa",
+    "slug": "lacrimosa",
+    "url": "https://www.ntegame.com/images/characters/lacrimosa/yh_lihui_character_anhunqu.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/lacrimosa_card.webp"
+  },
+  {
+    "name": "Linko",
+    "slug": "linko",
+    "url": "https://cdn.prydwen.gg/images/nte/characters/linko_full.webp",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/linko_card.webp"
+  },
+  {
+    "name": "Mint",
+    "slug": "mint",
+    "url": "https://www.ntegame.com/images/characters/mint/yh_lihui_character_bohe.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/mint_card.webp"
+  },
+  {
+    "name": "Nanally",
+    "slug": "nanally",
+    "url": "https://www.ntegame.com/images/characters/nanally/yh_lihui_character_nanali.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/nanally_card.webp"
+  },
+  {
+    "name": "Sakiri",
+    "slug": "sakiri",
+    "url": "https://www.ntegame.com/images/characters/sakiri/yh_lihui_character_zaowu.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/sakiri_card.webp"
+  },
+  {
+    "name": "Shinku",
+    "slug": "shinku",
+    "url": "https://cdn.prydwen.gg/images/nte/characters/shinku_full.webp",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/shinku_card.webp"
+  },
+  {
+    "name": "Skia",
+    "slug": "skia",
+    "url": "https://www.ntegame.com/images/characters/skia/yh_lihui_character_langren.png",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/skia_card.webp"
+  },
+  {
+    "name": "Zankou",
+    "slug": "zankou",
+    "url": "https://cdn.prydwen.gg/images/nte/characters/zankou_card.webp",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/zankou_card.webp"
+  },
+  {
+    "name": "Zero",
+    "slug": "zero",
+    "url": "https://cdn.prydwen.gg/images/nte/characters/zero_card.webp",
+    "fallback": "https://cdn.prydwen.gg/images/nte/characters/zero_card.webp"
+  }
+]
