@@ -1,0 +1,1202 @@
+{
+  "app": "NTE Progress Tracker",
+  "version": 2,
+  "source": "Units.xlsx",
+  "characters": [
+    {
+      "id": "c-001",
+      "name": "Adler",
+      "level": 80,
+      "awakening": 6,
+      "bond": 10,
+      "skills": {
+        "basic": 6,
+        "redirect": 10,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Promise",
+        "price": 10000,
+        "affection": 400,
+        "store": "Oops! Chest",
+        "location": "Bridge Crossings",
+        "dateable": null,
+        "interactions": null,
+        "sourceName": "Adler"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-002",
+      "name": "Akane",
+      "level": 60,
+      "awakening": 0,
+      "bond": 0,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 0,
+        "life2": null
+      },
+      "gift": {
+        "name": "Unrecorded Sound",
+        "price": 15000,
+        "affection": 400,
+        "store": "Exile on Main St.",
+        "location": "Bridge Crossings",
+        "dateable": "Yes",
+        "interactions": "Locked",
+        "sourceName": "Akane"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-003",
+      "name": "Aurelia",
+      "level": 80,
+      "awakening": 6,
+      "bond": 6,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Promise",
+        "price": 10000,
+        "affection": 400,
+        "store": "Oops! Chest",
+        "location": "Bridge Crossings",
+        "dateable": null,
+        "interactions": null,
+        "sourceName": "Aurelia"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-004",
+      "name": "Baicang",
+      "level": 80,
+      "awakening": 0,
+      "bond": 10,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Gigafluff - The Strong",
+        "price": 12000,
+        "affection": 400,
+        "store": "DSD POP",
+        "location": "Bridge Crossings",
+        "dateable": null,
+        "interactions": null,
+        "sourceName": "Baicang"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-005",
+      "name": "Blackbird",
+      "level": 80,
+      "awakening": 2,
+      "bond": 6,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Moonmelt Tea Set",
+        "price": 15000,
+        "affection": 400,
+        "store": "Oops! Chest",
+        "location": "Miguel District",
+        "dateable": "Yes",
+        "interactions": "Done",
+        "sourceName": "Blackbird"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-006",
+      "name": "Chaos",
+      "level": 80,
+      "awakening": 4,
+      "bond": 6,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Kokoro Rider L1 - Eradicator",
+        "price": 14400,
+        "affection": 400,
+        "store": "DSD POP",
+        "location": "Illusion Town",
+        "dateable": "Yes",
+        "interactions": "Done",
+        "sourceName": "Chaos"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-007",
+      "name": "Chiz",
+      "level": 80,
+      "awakening": 6,
+      "bond": 8,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 4,
+        "life2": null
+      },
+      "gift": {
+        "name": "Bunny Box",
+        "price": 20000,
+        "affection": 400,
+        "store": "Mr. Brown",
+        "location": "Bridge Crossings",
+        "dateable": "Yes",
+        "interactions": "Done",
+        "sourceName": "Chiz"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-008",
+      "name": "Daffodill",
+      "level": 80,
+      "awakening": 2,
+      "bond": 10,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 4,
+        "life2": null
+      },
+      "gift": {
+        "name": "Promise",
+        "price": 10000,
+        "affection": 400,
+        "store": "Oops! Chest",
+        "location": "Bridge Crossings",
+        "dateable": null,
+        "interactions": null,
+        "sourceName": "Daffodil"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-009",
+      "name": "Edgar",
+      "level": 80,
+      "awakening": 6,
+      "bond": 10,
+      "skills": {
+        "basic": 7,
+        "redirect": 7,
+        "ultimate": 7,
+        "support": 7,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Bear-o-metry",
+        "price": 10000,
+        "affection": 400,
+        "store": "Oops! Chest",
+        "location": "Illusion Town",
+        "dateable": null,
+        "interactions": null,
+        "sourceName": "Edgar"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-010",
+      "name": "Fadia",
+      "level": 80,
+      "awakening": 1,
+      "bond": 10,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 4,
+        "life2": null
+      },
+      "gift": {
+        "name": "Glimmering Ice",
+        "price": 5400,
+        "affection": 400,
+        "store": "Hillside Blooms",
+        "location": "Bridge Crossings",
+        "dateable": null,
+        "interactions": "Done",
+        "sourceName": "Fadia"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-011",
+      "name": "Haniel",
+      "level": 80,
+      "awakening": 6,
+      "bond": 10,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Asahi Inori - Crimson",
+        "price": 18000,
+        "affection": 400,
+        "store": "DSD POP",
+        "location": "Illusion Town",
+        "dateable": null,
+        "interactions": null,
+        "sourceName": "Haniel"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-012",
+      "name": "Hathor",
+      "level": 80,
+      "awakening": 2,
+      "bond": 9,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "On Track",
+        "price": 20000,
+        "affection": 400,
+        "store": "Mr. Brown",
+        "location": "Miguel District",
+        "dateable": null,
+        "interactions": null,
+        "sourceName": "Hathor"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-013",
+      "name": "Hotori",
+      "level": 80,
+      "awakening": 1,
+      "bond": 6,
+      "skills": {
+        "basic": 9,
+        "redirect": 9,
+        "ultimate": 10,
+        "support": 9,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Golden Moon",
+        "price": 15000,
+        "affection": 400,
+        "store": "Mr. Brown",
+        "location": "Illusion Town",
+        "dateable": "Yes",
+        "interactions": "Done",
+        "sourceName": "Hotori"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-014",
+      "name": "Iroi",
+      "level": 80,
+      "awakening": 6,
+      "bond": 8,
+      "skills": {
+        "basic": 10,
+        "redirect": 10,
+        "ultimate": 10,
+        "support": 10,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Solitude",
+        "price": 10000,
+        "affection": 400,
+        "store": "Oops! Chest",
+        "location": "Illusion Town",
+        "dateable": "Yes",
+        "interactions": "Done",
+        "sourceName": "Iroi"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-015",
+      "name": "Jiuyuan",
+      "level": 80,
+      "awakening": 1,
+      "bond": 9,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 4,
+        "life2": null
+      },
+      "gift": {
+        "name": "On Track",
+        "price": 20000,
+        "affection": 400,
+        "store": "Mr. Brown",
+        "location": "Miguel District",
+        "dateable": "Yes",
+        "interactions": "Done",
+        "sourceName": "Jiuyuan"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-016",
+      "name": "Lacrimosa",
+      "level": 80,
+      "awakening": 2,
+      "bond": 7,
+      "skills": {
+        "basic": 10,
+        "redirect": 10,
+        "ultimate": 10,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Bunny Box",
+        "price": 20000,
+        "affection": 400,
+        "store": "Mr. Brown",
+        "location": "Bridge Crossings",
+        "dateable": "Yes",
+        "interactions": "Done",
+        "sourceName": "Lacrimosa"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-017",
+      "name": "Linko",
+      "level": 80,
+      "awakening": 1,
+      "bond": 6,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 4,
+        "life2": null
+      },
+      "gift": {
+        "name": "Golden Moon",
+        "price": 15000,
+        "affection": 400,
+        "store": "Mr. Brown",
+        "location": "Illusion Town",
+        "dateable": "Yes",
+        "interactions": "Done",
+        "sourceName": "Linko"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-018",
+      "name": "Mint",
+      "level": 80,
+      "awakening": 6,
+      "bond": 10,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Asahi Inori - Crimson",
+        "price": 18000,
+        "affection": 400,
+        "store": "DSD POP",
+        "location": "Illusion Town",
+        "dateable": null,
+        "interactions": "Done",
+        "sourceName": "Mint"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-019",
+      "name": "Nanally",
+      "level": 80,
+      "awakening": 6,
+      "bond": 10,
+      "skills": {
+        "basic": 9,
+        "redirect": 9,
+        "ultimate": 10,
+        "support": 9,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Kokoro Rider L1 - Eradicator",
+        "price": 14400,
+        "affection": 400,
+        "store": "DSD POP",
+        "location": "Illusion Town",
+        "dateable": "Yes",
+        "interactions": "Done",
+        "sourceName": "Nanally"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-020",
+      "name": "Sakiri",
+      "level": 80,
+      "awakening": 1,
+      "bond": 9,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 10,
+        "support": 10,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Bunny Box",
+        "price": 20000,
+        "affection": 400,
+        "store": "Mr. Brown",
+        "location": "Bridge Crossings",
+        "dateable": null,
+        "interactions": null,
+        "sourceName": "Sakiri"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-021",
+      "name": "Shinku",
+      "level": 80,
+      "awakening": 6,
+      "bond": 10,
+      "skills": {
+        "basic": 10,
+        "redirect": 10,
+        "ultimate": 10,
+        "support": 10,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Gigafluff - The Strong",
+        "price": 12000,
+        "affection": 400,
+        "store": "DSD POP",
+        "location": "Bridge Crossings",
+        "dateable": null,
+        "interactions": "Done",
+        "sourceName": "Shinku"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-022",
+      "name": "Skia",
+      "level": 80,
+      "awakening": 6,
+      "bond": 9,
+      "skills": {
+        "basic": 6,
+        "redirect": 6,
+        "ultimate": 6,
+        "support": 6,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "White Jade Lamp",
+        "price": 20000,
+        "affection": 400,
+        "store": "Mr. Brown",
+        "location": "Miguel District",
+        "dateable": null,
+        "interactions": null,
+        "sourceName": "Skia"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-023",
+      "name": "Zankou",
+      "level": 80,
+      "awakening": 6,
+      "bond": 6,
+      "skills": {
+        "basic": 10,
+        "redirect": 10,
+        "ultimate": 10,
+        "support": 10,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": {
+        "name": "Moonmelt Tea Set",
+        "price": 15000,
+        "affection": 400,
+        "store": "Oops! Chest",
+        "location": "Miguel District",
+        "dateable": "Yes",
+        "interactions": "Done",
+        "sourceName": "Zankou"
+      },
+      "notes": ""
+    },
+    {
+      "id": "c-024",
+      "name": "Zero",
+      "level": 80,
+      "awakening": 6,
+      "bond": null,
+      "skills": {
+        "basic": 10,
+        "redirect": 10,
+        "ultimate": 10,
+        "support": 10,
+        "esper": null,
+        "passive": null,
+        "life1": 5,
+        "life2": null
+      },
+      "gift": null,
+      "notes": ""
+    }
+  ],
+  "arcs": [
+    {
+      "id": "a-001",
+      "name": "Blow Up the Crowd",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-002",
+      "name": "Blushing Mirage",
+      "level": 80,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-003",
+      "name": "Camellia Society",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-004",
+      "name": "Contemplative Cat",
+      "level": 50,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-005",
+      "name": "Crime and Punishment",
+      "level": 80,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-006",
+      "name": "Day Off",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-007",
+      "name": "Eternal Waltz",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-008",
+      "name": "Far Side of the Moon",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-009",
+      "name": "Fluff of Fearlessness",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-010",
+      "name": "Fluff of Ferocity",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-011",
+      "name": "Fluff of Finesse",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-012",
+      "name": "Fluff of Fleetness",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-013",
+      "name": "Fluff of Fortitude",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-014",
+      "name": "Good Boy's Grand Adventure",
+      "level": 80,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-015",
+      "name": "Hethereau's Keeper",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-016",
+      "name": "Marching Beyond Time",
+      "level": 80,
+      "tier": 2,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-017",
+      "name": "Raging Flames",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-018",
+      "name": "Ravenous Blade",
+      "level": 80,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-019",
+      "name": "Ready-Ready",
+      "level": 80,
+      "tier": 3,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-020",
+      "name": "Reality Refuge",
+      "level": 80,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-021",
+      "name": "Song of the Whale",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-022",
+      "name": "Stellar Veil",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-023",
+      "name": "Tears Beneath the Mask",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-024",
+      "name": "The Last Rose",
+      "level": 80,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-025",
+      "name": "The Rain That Shook The World",
+      "level": 80,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-026",
+      "name": "The Wrong Gate",
+      "level": 80,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-027",
+      "name": "Voice of the Voyager",
+      "level": 26,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-028",
+      "name": "What's Desired",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-029",
+      "name": "Your Happiness is Priceless",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-030",
+      "name": "Youthful Fantasy",
+      "level": 50,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-031",
+      "name": "A Time Will Come",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-032",
+      "name": "Call of the Twisted City",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-033",
+      "name": "Clear Skies",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-034",
+      "name": "Cosmos Daze, Wild Reverie",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-035",
+      "name": "Drawn Blade",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-036",
+      "name": "Failing You, Heavy in My Heart",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-037",
+      "name": "Mind Royale",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-038",
+      "name": "Oraora!",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-039",
+      "name": "Shiny Days",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-040",
+      "name": "The Fool's Spring",
+      "level": 20,
+      "tier": 1,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-041",
+      "name": "The Forgotten",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-042",
+      "name": "The Good, The Bad, The Bitter",
+      "level": 20,
+      "tier": 3,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-043",
+      "name": "The Great Thief",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-044",
+      "name": "Time Bandit",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-045",
+      "name": "Umbrella",
+      "level": 80,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-046",
+      "name": "Watch Your Heads!",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-047",
+      "name": "\"Real Music\"",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-048",
+      "name": "Be Happy",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-049",
+      "name": "Dangerous Game",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-050",
+      "name": "First Step to Success",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    },
+    {
+      "id": "a-051",
+      "name": "Us.",
+      "level": 20,
+      "tier": 5,
+      "owner": null,
+      "notes": ""
+    }
+  ],
+  "achievements": [
+    {
+      "id": "h-001",
+      "category": "Pixel Vaporwave",
+      "name": "Eternal Home",
+      "description": "Reach Sakiri Affection Lvl 10.",
+      "rarity": null,
+      "current": null,
+      "target": null,
+      "completed": false,
+      "observation": "Affection",
+      "autoBond": true
+    },
+    {
+      "id": "h-002",
+      "category": "Pixel Vaporwave",
+      "name": "Part of the Routine",
+      "description": "Reach Skia Affection Lvl 10.",
+      "rarity": null,
+      "current": null,
+      "target": null,
+      "completed": false,
+      "observation": "Affection",
+      "autoBond": true
+    },
+    {
+      "id": "h-003",
+      "category": "Pixel Vaporwave",
+      "name": "Exclusive Channel",
+      "description": "Reach Hathor Affection Lvl 10.",
+      "rarity": null,
+      "current": null,
+      "target": null,
+      "completed": false,
+      "observation": "Affection",
+      "autoBond": true
+    },
+    {
+      "id": "h-004",
+      "category": "Pixel Vaporwave",
+      "name": "Nightingale's Favor",
+      "description": "Reach Jiuyuan Affection Lvl 10.",
+      "rarity": null,
+      "current": null,
+      "target": null,
+      "completed": false,
+      "observation": "Affection",
+      "autoBond": true
+    },
+    {
+      "id": "h-005",
+      "category": "Pixel Vaporwave",
+      "name": "Where My Heart Finds Peace",
+      "description": "Reach Chiz Affection Lvl 10.",
+      "rarity": null,
+      "current": null,
+      "target": null,
+      "completed": false,
+      "observation": "Affection",
+      "autoBond": true
+    },
+    {
+      "id": "h-006",
+      "category": "Pixel Vaporwave",
+      "name": "Bond & Harmony",
+      "description": "Reach Aurelia Affection Lvl 5.",
+      "rarity": null,
+      "current": null,
+      "target": null,
+      "completed": false,
+      "observation": "Affection",
+      "autoBond": true
+    },
+    {
+      "id": "h-007",
+      "category": "Pixel Vaporwave",
+      "name": "Dearest Friend",
+      "description": "Reach Aurelia Affection Lvl 10.",
+      "rarity": null,
+      "current": null,
+      "target": null,
+      "completed": false,
+      "observation": "Affection",
+      "autoBond": true
+    },
+    {
+      "id": "h-008",
+      "category": "Distorted Ferrite",
+      "name": "I Acknowledge You as the Strongest",
+      "description": "Raise Hunter Level to Lvl 60.",
+      "rarity": null,
+      "current": null,
+      "target": null,
+      "completed": false,
+      "observation": "Time Constraint",
+      "autoBond": false
+    },
+    {
+      "id": "h-009",
+      "category": "Gravity Type IV",
+      "name": "Appraise It!",
+      "description": "Obtain 7 pieces of equipment with an appraisal value of 33.",
+      "rarity": null,
+      "current": null,
+      "target": null,
+      "completed": false,
+      "observation": "Grind",
+      "autoBond": false
+    },
+    {
+      "id": "h-010",
+      "category": "Gravity Type IV",
+      "name": "Court Conqueror",
+      "description": "Reach No. 1 in the Volley Star World Rankings.",
+      "rarity": null,
+      "current": null,
+      "target": null,
+      "completed": false,
+      "observation": "Time Constraint",
+      "autoBond": false
+    }
+  ]
+}

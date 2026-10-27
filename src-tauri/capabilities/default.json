@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "App IPC and native backup file chooser; no unrestricted file-system access",
+  "windows": ["main"],
+  "permissions": ["core:default", "dialog:default"]
+}
