@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "contentVersion": "2026.10.28.2",
-  "scope": "Initial verified-structure catalogue. Character / Arc names from imported Excel; unknown game details intentionally left unverified.",
+  "contentVersion": "2026.10.29.1",
+  "scope": "NTE v2 character roster: 20 verified elements and Arc compatibilities; 11 full skill-name sets, partial names for others. Unknown facts remain unset.",
   "sources": [
     {
       "name": "Icy Veins characters",
@@ -30,7 +30,19 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "adler.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Incantation",
+      "arc_compatibility": "Condensate",
+      "skill_names": {
+        "basic_attack": "Deliverance",
+        "redirect_skill": "Evil’s Bane",
+        "ultimate_skill": "Tranquility",
+        "support_skill": "Pristine Reflection",
+        "passive_1": "Temperance",
+        "passive_2": "Righteous Heart",
+        "life_skill_1": "Coffee Master"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/adler"
     },
     {
       "id": "char:akane-rin",
@@ -60,7 +72,13 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "aurelia.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Psyche",
+      "arc_compatibility": "Plasma",
+      "skill_names": {
+        "basic_attack": "Cappella"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/aurelia"
     },
     {
       "id": "char:baicang",
@@ -75,7 +93,13 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "baicang.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Incantation",
+      "arc_compatibility": "Synthesis",
+      "skill_names": {
+        "basic_attack": "Walk the Talk"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/baicang"
     },
     {
       "id": "char:blackbird",
@@ -105,7 +129,13 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "chaos.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Lakshana",
+      "arc_compatibility": "Synthesis",
+      "skill_names": {
+        "basic_attack": "Pursuit"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/chaos"
     },
     {
       "id": "char:chiz",
@@ -120,7 +150,19 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "chiz.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Cosmos",
+      "arc_compatibility": "Gas",
+      "skill_names": {
+        "basic_attack": "Exiled Swordplay",
+        "redirect_skill": "Pink Paws Priority Principle",
+        "ultimate_skill": "Zero-Sum Game",
+        "support_skill": "Temporary Entry",
+        "passive_1": "Hanahaki Disease",
+        "passive_2": "Hoarding",
+        "life_skill_1": "Lobby Manager"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/chiz"
     },
     {
       "id": "char:daffodill",
@@ -150,7 +192,19 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "edgar.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Cosmos",
+      "arc_compatibility": "Liquid",
+      "skill_names": {
+        "basic_attack": "Combat Practice",
+        "redirect_skill": "Wild Current",
+        "ultimate_skill": "Finnegan’s Wake",
+        "support_skill": "Weight of Knowledge",
+        "passive_1": "Gentle Edge",
+        "passive_2": "Unchanging Warmth",
+        "life_skill_1": "Knowledge in Action"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/edgar"
     },
     {
       "id": "char:fadia",
@@ -165,7 +219,19 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "fadia.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Psyche",
+      "arc_compatibility": "Condensate",
+      "skill_names": {
+        "basic_attack": "Wordless Rejection",
+        "redirect_skill": "Existence",
+        "ultimate_skill": "Agony to Euphoria",
+        "support_skill": "Outsider",
+        "passive_1": "Furnace of Guilt",
+        "passive_2": "Denial and Plunder",
+        "life_skill_1": "Good Driving"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/fadia"
     },
     {
       "id": "char:haniel",
@@ -180,7 +246,19 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "haniel.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Psyche",
+      "arc_compatibility": "Solid",
+      "skill_names": {
+        "basic_attack": "Paranormal Entrance",
+        "redirect_skill": "Silent Moonlit Forest Guardian",
+        "ultimate_skill": "A Melody Named Haniel",
+        "support_skill": "Easter Egg Time",
+        "passive_1": "It’s Friendship!",
+        "passive_2": "It’s Bond!",
+        "life_skill_1": "A Pro on the Job"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/haniel"
     },
     {
       "id": "char:hathor",
@@ -195,7 +273,13 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "hathor.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Lakshana",
+      "arc_compatibility": "Plasma",
+      "skill_names": {
+        "basic_attack": "Rapid Delivery"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/hathor"
     },
     {
       "id": "char:hotori",
@@ -210,7 +294,19 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "hotori.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Cosmos",
+      "arc_compatibility": "Solid",
+      "skill_names": {
+        "basic_attack": "Misty Moon Style",
+        "redirect_skill": "Present Replay",
+        "ultimate_skill": "World’s Tide",
+        "support_skill": "Shopkeeper’s Authority",
+        "passive_1": "Ghost Orchid Crest",
+        "passive_2": "All Treasures Under Heaven",
+        "life_skill_1": "Treasure Hunt"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/hotori"
     },
     {
       "id": "char:iroi",
@@ -225,7 +321,13 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "iroi.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Anima",
+      "arc_compatibility": "Liquid",
+      "skill_names": {
+        "basic_attack": "Collaboration"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/iroi"
     },
     {
       "id": "char:jiuyuan",
@@ -240,7 +342,13 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "jiuyuan.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Anima",
+      "arc_compatibility": "Solid",
+      "skill_names": {
+        "basic_attack": "When Secrets Take Shape"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/jiuyuan"
     },
     {
       "id": "char:lacrimosa",
@@ -255,7 +363,20 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "lacrimosa.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Chaos",
+      "arc_compatibility": "Liquid",
+      "skill_names": {
+        "basic_attack": "Sweet and Sour",
+        "redirect_skill": "Morning Tomato",
+        "ultimate_skill": "Working Day Judgement",
+        "support_skill": "Microwake",
+        "passive_1": "Tomato Banquet",
+        "passive_2": "Sleep In",
+        "life_skill_1": "Chef Tomato",
+        "life_skill_2": "Exclusive Bat-efit"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/lacrimosa"
     },
     {
       "id": "char:linko",
@@ -270,7 +391,11 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "linko.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Anima",
+      "arc_compatibility": "Plasma",
+      "skill_names": {},
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/linko"
     },
     {
       "id": "char:mint",
@@ -285,7 +410,19 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "mint.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Anima",
+      "arc_compatibility": "Liquid",
+      "skill_names": {
+        "basic_attack": "Perfect Containment",
+        "redirect_skill": "Ultimate: Super Claws",
+        "ultimate_skill": "Ultimate: Thunderous Whirlwind Slash",
+        "support_skill": "Ultimate: Invincible Tornado Slash",
+        "passive_1": "Transform! Super Mint!",
+        "passive_2": "Bingo! We’re Done Here!",
+        "life_skill_1": "Mint Tornado"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/mint"
     },
     {
       "id": "char:nanally",
@@ -300,7 +437,19 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "nanally.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Anima",
+      "arc_compatibility": "Plasma",
+      "skill_names": {
+        "basic_attack": "Colucci Secret Skill",
+        "redirect_skill": "Colucci Howling Technique",
+        "ultimate_skill": "Colucci Ultimate Technique",
+        "support_skill": "Justice from Above",
+        "passive_1": "More Than Passionate",
+        "passive_2": "Fair Duel",
+        "life_skill_1": "Family Business"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/nanally"
     },
     {
       "id": "char:sakiri",
@@ -330,7 +479,13 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "shinku.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Cosmos",
+      "arc_compatibility": "Synthesis",
+      "skill_names": {
+        "basic_attack": "Special Combat Arts"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/shinku"
     },
     {
       "id": "char:skia",
@@ -345,7 +500,19 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "skia.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Lakshana",
+      "arc_compatibility": "Gas",
+      "skill_names": {
+        "basic_attack": "Arresting Art",
+        "redirect_skill": "Shadow Hound Chase",
+        "ultimate_skill": "The Pack",
+        "support_skill": "Arrest Warrant",
+        "passive_1": "Suppression",
+        "passive_2": "Apprehension",
+        "life_skill_1": "Middle Manager"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/skia"
     },
     {
       "id": "char:zankou",
@@ -360,7 +527,11 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "zankou.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Incantation",
+      "arc_compatibility": "Gas",
+      "skill_names": {},
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/zankou"
     },
     {
       "id": "char:zero",
@@ -375,7 +546,19 @@
       "life_skill_2_max": null,
       "life_skill_2_verified": false,
       "small_portrait": "zero.png",
-      "portrait": null
+      "portrait": null,
+      "element": "Cosmos",
+      "arc_compatibility": "Solid",
+      "skill_names": {
+        "basic_attack": "Appraisal",
+        "redirect_skill": "Appraise and Engrave",
+        "ultimate_skill": "Divide by Zero",
+        "support_skill": "Rift Blossom",
+        "passive_1": "Appraiser",
+        "passive_2": "Anomaly Perception",
+        "life_skill_1": "Five-Star Paragon"
+      },
+      "game_data_source": "https://www.prydwen.gg/neverness-to-everness/characters/zero"
     }
   ],
   "arcs": [
@@ -937,5 +1120,5 @@
     }
   ],
   "item_sources": [],
-  "catalogRevision": 5
+  "catalogRevision": 6
 }
