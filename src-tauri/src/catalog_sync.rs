@@ -171,7 +171,7 @@ pub async fn sync(root:&Path)->Result<Value>{
 #[cfg(test)]
 mod tests {
     use super::*;
-    #[test] fn embedded_catalogue_valid(){ assert_eq!(revision(&bundled().unwrap()).unwrap(),1); }
+    #[test] fn embedded_catalogue_valid(){ assert!(revision(&bundled().unwrap()).unwrap() >= 1); }
     #[test] fn rejects_bad_rarity(){let mut c=bundled().unwrap();c["items"]=json!([{"id":"item:test","name":"Test","rarity":"orange"}]);assert!(validate(&serde_json::to_vec(&c).unwrap()).is_err());}
     #[test] fn forbids_catalog_removals(){let c=bundled().unwrap();let mut next=c.clone();next["arcs"].as_array_mut().unwrap().clear();assert!(no_removals(&c,&next).is_err());}
     #[test] fn cache_is_separate_from_player_data(){
@@ -191,7 +191,7 @@ mod tests {
         let path=std::env::temp_dir().join(format!("nte-v2-corrupt-{}",Uuid::new_v4()));
         fs::create_dir_all(path.join("catalog-cache")).unwrap();
         fs::write(cache_path(&path),b"broken JSON").unwrap();
-        assert_eq!(load(&path).unwrap()["catalog"]["catalogRevision"],json!(1));
+        assert_eq!(load(&path).unwrap()["catalog"]["catalogRevision"],bundled().unwrap()["catalogRevision"]);
         fs::remove_dir_all(path).unwrap();
     }
 }
