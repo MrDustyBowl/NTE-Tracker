@@ -1,0 +1,940 @@
+{
+  "schemaVersion": 2,
+  "contentVersion": "catalog-prototype-2026-10-28",
+  "scope": "STAGING catalog: 24 known character names and 51 Arc names from supplied Excel; all unverified rarities, life caps, Bond details, and items left blank.",
+  "sources": [
+    {
+      "name": "Icy Veins characters",
+      "url": "https://www.icy-veins.com/neverness-to-everness/characters"
+    },
+    {
+      "name": "Prydwen NTE characters",
+      "url": "https://www.prydwen.gg/neverness-to-everness/characters"
+    },
+    {
+      "name": "Neverness community database",
+      "url": "https://interactivemap.app/neverness-to-everness/database/en/"
+    }
+  ],
+  "characters": [
+    {
+      "id": "char:adler",
+      "name": "Adler",
+      "rank": "A",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "adler.png",
+      "portrait": null
+    },
+    {
+      "id": "char:akane-rin",
+      "name": "Akane Rin",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "akane.png",
+      "portrait": null
+    },
+    {
+      "id": "char:aurelia",
+      "name": "Aurelia",
+      "rank": "A",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "aurelia.png",
+      "portrait": null
+    },
+    {
+      "id": "char:baicang",
+      "name": "Baicang",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "baicang.png",
+      "portrait": null
+    },
+    {
+      "id": "char:blackbird",
+      "name": "Blackbird",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "blackbird.png",
+      "portrait": null
+    },
+    {
+      "id": "char:chaos",
+      "name": "Chaos",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "chaos.png",
+      "portrait": null
+    },
+    {
+      "id": "char:chiz",
+      "name": "Chiz",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "chiz.png",
+      "portrait": null
+    },
+    {
+      "id": "char:daffodill",
+      "name": "Daffodill",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "daffodill.png",
+      "portrait": null
+    },
+    {
+      "id": "char:edgar",
+      "name": "Edgar",
+      "rank": "A",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "edgar.png",
+      "portrait": null
+    },
+    {
+      "id": "char:fadia",
+      "name": "Fadia",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "fadia.png",
+      "portrait": null
+    },
+    {
+      "id": "char:haniel",
+      "name": "Haniel",
+      "rank": "A",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "haniel.png",
+      "portrait": null
+    },
+    {
+      "id": "char:hathor",
+      "name": "Hathor",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "hathor.png",
+      "portrait": null
+    },
+    {
+      "id": "char:hotori",
+      "name": "Hotori",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "hotori.png",
+      "portrait": null
+    },
+    {
+      "id": "char:iroi",
+      "name": "Iroi",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "iroi.png",
+      "portrait": null
+    },
+    {
+      "id": "char:jiuyuan",
+      "name": "Jiuyuan",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "jiuyuan.png",
+      "portrait": null
+    },
+    {
+      "id": "char:lacrimosa",
+      "name": "Lacrimosa",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "lacrimosa.png",
+      "portrait": null
+    },
+    {
+      "id": "char:linko",
+      "name": "Linko",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "linko.png",
+      "portrait": null
+    },
+    {
+      "id": "char:mint",
+      "name": "Mint",
+      "rank": "A",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "mint.png",
+      "portrait": null
+    },
+    {
+      "id": "char:nanally",
+      "name": "Nanally",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "nanally.png",
+      "portrait": null
+    },
+    {
+      "id": "char:sakiri",
+      "name": "Sakiri",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "sakiri.png",
+      "portrait": null
+    },
+    {
+      "id": "char:shinku",
+      "name": "Shinku",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "shinku.png",
+      "portrait": null
+    },
+    {
+      "id": "char:skia",
+      "name": "Skia",
+      "rank": "A",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "skia.png",
+      "portrait": null
+    },
+    {
+      "id": "char:zankou",
+      "name": "Zankou",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "zankou.png",
+      "portrait": null
+    },
+    {
+      "id": "char:zero",
+      "name": "Zero",
+      "rank": "S",
+      "max_level": 80,
+      "basic_attack_max": 10,
+      "redirect_skill_max": 10,
+      "ultimate_skill_max": 10,
+      "support_skill_max": 10,
+      "life_skill_1_max": null,
+      "life_skill_2_max": null,
+      "life_skill_2_verified": false,
+      "small_portrait": "zero.png",
+      "portrait": null
+    }
+  ],
+  "arcs": [
+    {
+      "id": "arc:blow-up-the-crowd",
+      "name": "Blow Up the Crowd",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:blushing-mirage",
+      "name": "Blushing Mirage",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:camellia-society",
+      "name": "Camellia Society",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:contemplative-cat",
+      "name": "Contemplative Cat",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:crime-and-punishment",
+      "name": "Crime and Punishment",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:day-off",
+      "name": "Day Off",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:eternal-waltz",
+      "name": "Eternal Waltz",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:far-side-of-the-moon",
+      "name": "Far Side of the Moon",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:fluff-of-fearlessness",
+      "name": "Fluff of Fearlessness",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:fluff-of-ferocity",
+      "name": "Fluff of Ferocity",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:fluff-of-finesse",
+      "name": "Fluff of Finesse",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:fluff-of-fleetness",
+      "name": "Fluff of Fleetness",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:fluff-of-fortitude",
+      "name": "Fluff of Fortitude",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:good-boy-s-grand-adventure",
+      "name": "Good Boy's Grand Adventure",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:hethereau-s-keeper",
+      "name": "Hethereau's Keeper",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:marching-beyond-time",
+      "name": "Marching Beyond Time",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:raging-flames",
+      "name": "Raging Flames",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:ravenous-blade",
+      "name": "Ravenous Blade",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:ready-ready",
+      "name": "Ready-Ready",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:reality-refuge",
+      "name": "Reality Refuge",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:song-of-the-whale",
+      "name": "Song of the Whale",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:stellar-veil",
+      "name": "Stellar Veil",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:tears-beneath-the-mask",
+      "name": "Tears Beneath the Mask",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:the-last-rose",
+      "name": "The Last Rose",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:the-rain-that-shook-the-world",
+      "name": "The Rain That Shook The World",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:the-wrong-gate",
+      "name": "The Wrong Gate",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:voice-of-the-voyager",
+      "name": "Voice of the Voyager",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:what-s-desired",
+      "name": "What's Desired",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:your-happiness-is-priceless",
+      "name": "Your Happiness is Priceless",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:youthful-fantasy",
+      "name": "Youthful Fantasy",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:a-time-will-come",
+      "name": "A Time Will Come",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:call-of-the-twisted-city",
+      "name": "Call of the Twisted City",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:clear-skies",
+      "name": "Clear Skies",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:cosmos-daze-wild-reverie",
+      "name": "Cosmos Daze, Wild Reverie",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:drawn-blade",
+      "name": "Drawn Blade",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:failing-you-heavy-in-my-heart",
+      "name": "Failing You, Heavy in My Heart",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:mind-royale",
+      "name": "Mind Royale",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:oraora",
+      "name": "Oraora!",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:shiny-days",
+      "name": "Shiny Days",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:the-fool-s-spring",
+      "name": "The Fool's Spring",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:the-forgotten",
+      "name": "The Forgotten",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:the-good-the-bad-the-bitter",
+      "name": "The Good, The Bad, The Bitter",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:the-great-thief",
+      "name": "The Great Thief",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:time-bandit",
+      "name": "Time Bandit",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:umbrella",
+      "name": "Umbrella",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:watch-your-heads",
+      "name": "Watch Your Heads!",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:real-music",
+      "name": "\"Real Music\"",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:be-happy",
+      "name": "Be Happy",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:dangerous-game",
+      "name": "Dangerous Game",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:first-step-to-success",
+      "name": "First Step to Success",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    },
+    {
+      "id": "arc:us",
+      "name": "Us.",
+      "rarity": null,
+      "max_level": 80,
+      "max_tier": 5,
+      "icon": null
+    }
+  ],
+  "achievements": [],
+  "items": [],
+  "character_bonds": [
+    {
+      "character_id": "char:adler",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:akane-rin",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:aurelia",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:baicang",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:blackbird",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:chaos",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:chiz",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:daffodill",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:edgar",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:fadia",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:haniel",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:hathor",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:hotori",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:iroi",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:jiuyuan",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:lacrimosa",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:linko",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:mint",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:nanally",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:sakiri",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:shinku",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:skia",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:zankou",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    },
+    {
+      "character_id": "char:zero",
+      "favorite_gift_id": null,
+      "dateable": null,
+      "has_interactions": null
+    }
+  ],
+  "item_sources": []
+}

@@ -1,3 +1,4 @@
+mod catalog_profile;
 use base64::{engine::general_purpose::STANDARD, Engine as _};
 use chrono::Local;
 use rusqlite::{params, Connection};
@@ -28,12 +29,12 @@ fn open_db(paths: &AppPaths) -> CmdResult<Connection> {
         PRIMARY KEY (kind, id));
         CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);")
         .map_err(|e| e.to_string())?;
+    catalog_profile::initialize(&db)?;
     let seeded: i64 = db.query_row("SELECT COUNT(*) FROM meta WHERE key='seeded'", [], |r| r.get(0))
         .map_err(|e| e.to_string())?;
     if seeded == 0 {
-        let seed: Value = serde_json::from_str(include_str!("../seed.json")).map_err(|e| e.to_string())?;
-        write_db(&db, &seed)?;
-        db.execute("INSERT INTO meta(key, value) VALUES ('seeded', '1')", []).map_err(|e| e.to_string())?;
+        // Fresh v2 installations start with no player progress; old SQLite remains untouched.
+        db.execute("INSERT INTO meta(key, value) VALUES ('seeded', '2')", []).map_err(|e| e.to_string())?;
     }
     Ok(db)
 }
@@ -142,6 +143,10 @@ fn create_archive(paths: &AppPaths, dest: &Path) -> CmdResult<()> {
     zip.start_file("data.json", opts).map_err(|e| e.to_string())?;
     zip.write_all(serde_json::to_string_pretty(&state).map_err(|e| e.to_string())?.as_bytes())
         .map_err(|e| e.to_string())?;
+    zip.start_file("profile-v2.json", opts).map_err(|e| e.to_string())?;
+    let profile = catalog_profile::read(&db)?;
+    zip.write_all(serde_json::to_string_pretty(&profile).map_err(|e|e.to_string())?.as_bytes())
+        .map_err(|e|e.to_string())?;
     for name in referenced_images(&state)? {
         let p = paths.portraits().join(&name);
         if !p.is_file() { return Err(format!("Missing image file: {name}")); }
@@ -183,6 +188,20 @@ fn create_safety_backup(paths: &AppPaths) -> CmdResult<()> {
 #[tauri::command]
 fn backup_before_update(paths: tauri::State<'_, AppPaths>) -> CmdResult<()> {
     create_named_safety_backup(&paths, "pre-update")
+}
+
+#[tauri::command]
+fn load_user_profile(paths: tauri::State<'_, AppPaths>) -> CmdResult<Value> {
+    catalog_profile::read(&open_db(&paths)?)
+}
+#[tauri::command]
+fn save_user_progress(paths: tauri::State<'_, AppPaths>, kind: String, id: String, progress: Value) -> CmdResult<()> {
+    catalog_profile::save_one(&open_db(&paths)?, &kind, &id, &progress)
+}
+#[tauri::command]
+fn reset_user_profile(paths: tauri::State<'_, AppPaths>) -> CmdResult<()> {
+    create_named_safety_backup(&paths, "pre-profile-reset")?;
+    catalog_profile::replace(&open_db(&paths)?, &json!({"characters":{},"arcs":{},"achievements":{},"items":{},"bonds":{}}))
 }
 
 #[tauri::command]
@@ -261,6 +280,7 @@ fn restore_zip(paths: tauri::State<'_, AppPaths>, path: String) -> CmdResult<Val
     let mut archive = ZipArchive::new(source).map_err(|e| e.to_string())?;
     if archive.len() > 3000 { return Err("Backup contains too many files".into()); }
     let mut parsed: Option<Value> = None;
+    let mut profile_v2: Option<Value> = None;
     let mut portraits: Vec<(String, Vec<u8>)> = Vec::new();
     let mut total: u64 = 0;
     for i in 0..archive.len() {
@@ -274,6 +294,12 @@ fn restore_zip(paths: tauri::State<'_, AppPaths>, path: String) -> CmdResult<Val
             let data: Value = serde_json::from_str(&contents).map_err(|e| e.to_string())?;
             validate_state(&data)?;
             parsed = Some(data);
+        } else if name == "profile-v2.json" {
+            let mut contents = String::new();
+            entry.read_to_string(&mut contents).map_err(|e|e.to_string())?;
+            let data: Value = serde_json::from_str(&contents).map_err(|e|e.to_string())?;
+            catalog_profile::validate_profile(&data)?;
+            profile_v2 = Some(data);
         } else if let Some(file_name) = name.strip_prefix("portraits/") {
             if !valid_portrait_file(file_name) { return Err("Unsafe portrait name in backup".into()); }
             if entry.size() > MAX_IMAGE_BYTES as u64 { return Err("Oversized portrait in backup".into()); }
@@ -296,7 +322,10 @@ fn restore_zip(paths: tauri::State<'_, AppPaths>, path: String) -> CmdResult<Val
     for (name, bytes) in portraits {
         fs::write(paths.portraits().join(name), bytes).map_err(|e| e.to_string())?;
     }
-    write_db(&open_db(&paths)?, &data)?;
+    let db = open_db(&paths)?;
+    write_db(&db, &data)?;
+    // v1 backups lack profile-v2.json; leave current v2 progress intact in that case.
+    if let Some(saved) = profile_v2 { catalog_profile::replace(&db, &saved)?; }
     Ok(data)
 }
 
@@ -325,7 +354,8 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             load_state, save_state, reset_to_excel, restore_json, save_portrait, read_portrait,
-            backup_zip, restore_zip, get_data_directory, backup_before_update
+            backup_zip, restore_zip, get_data_directory, backup_before_update,
+            load_user_profile, save_user_progress, reset_user_profile
         ])
         .run(tauri::generate_context!())
         .expect("NTE Tracker startup failed");

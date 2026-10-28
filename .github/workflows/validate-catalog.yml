@@ -1,0 +1,19 @@
+name: Validate v2 catalog and player rules
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches-ignore:
+      - main
+jobs:
+  catalog-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate catalogue schema, progression rules and backups
+        run: node test-catalog-v2.cjs
+      - name: Syntax check frontend
+        run: node --check src/catalog-main.js
