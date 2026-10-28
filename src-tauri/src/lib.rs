@@ -1,4 +1,5 @@
 mod catalog_profile;
+mod catalog_sync;
 use base64::{engine::general_purpose::STANDARD, Engine as _};
 use chrono::Local;
 use rusqlite::{params, Connection};
@@ -191,6 +192,16 @@ fn backup_before_update(paths: tauri::State<'_, AppPaths>) -> CmdResult<()> {
 }
 
 #[tauri::command]
+fn load_game_catalog(paths: tauri::State<'_, AppPaths>) -> CmdResult<Value> {
+    catalog_sync::load(&paths.root)
+}
+#[tauri::command]
+async fn sync_game_catalog(paths: tauri::State<'_, AppPaths>) -> CmdResult<Value> {
+    let root = paths.root.clone();
+    catalog_sync::sync(&root).await
+}
+
+#[tauri::command]
 fn load_user_profile(paths: tauri::State<'_, AppPaths>) -> CmdResult<Value> {
     catalog_profile::read(&open_db(&paths)?)
 }
@@ -355,7 +366,8 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             load_state, save_state, reset_to_excel, restore_json, save_portrait, read_portrait,
             backup_zip, restore_zip, get_data_directory, backup_before_update,
-            load_user_profile, save_user_progress, reset_user_profile
+            load_user_profile, save_user_progress, reset_user_profile,
+            load_game_catalog, sync_game_catalog
         ])
         .run(tauri::generate_context!())
         .expect("NTE Tracker startup failed");

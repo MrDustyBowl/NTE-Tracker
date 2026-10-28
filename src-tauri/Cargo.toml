@@ -1,6 +1,6 @@
 [package]
 name = "nte-tracker"
-version = "1.2.3"
+version = "2.0.0"
 description = "Offline Neverness to Everness progress tracker"
 authors = ["NTE Tracker"]
 edition = "2021"
@@ -26,3 +26,6 @@ zip = { version = "0.6.6", default-features = false, features = ["deflate"] }
 # Signed application updates and relaunch
 tauri-plugin-updater = "2"
 tauri-plugin-process = "2"
+
+# HTTPS-only read-only public catalogue synchronization
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }

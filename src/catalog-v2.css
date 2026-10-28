@@ -55,3 +55,11 @@
 .v2-filter-controls{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .v2-filter-controls button{border:1px solid #5a4958;border-radius:28px;padding:7px 10px;background:#2b262e;color:#c1b6c3;font-size:11px;font-weight:800}
 .v2-filter-controls button.active{background:#f23a8d;border-color:#fd5ca2;color:#23121a}
+
+.catalog-sync-bar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;border:1px solid #594859;border-radius:10px;padding:10px 14px;margin-bottom:15px;background:#292329;color:#e5d5df;font-size:11px}
+.catalog-sync-dot{height:7px;width:7px;border-radius:50%;background:#4fdbac;flex:none}
+.catalog-sync-bar:has([data-state="offline"]) .catalog-sync-dot{background:#ffbf68}
+.catalog-sync-bar:has([data-state="checking"]) .catalog-sync-dot{background:#87b8ff}
+.catalog-sync-hint{margin-left:auto;color:#ab9ea8}
+#catalog-check:disabled{opacity:.5;cursor:wait}
+@media(max-width:950px){.catalog-sync-hint{margin-left:0}}

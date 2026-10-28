@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "contentVersion": "catalog-prototype-2026-10-28",
-  "scope": "STAGING catalog: 24 known character names and 51 Arc names from supplied Excel; all unverified rarities, life caps, Bond details, and items left blank.",
+  "contentVersion": "2026.10.28.1",
+  "scope": "Initial verified-structure catalogue. Character / Arc names from imported Excel; unknown game details intentionally left unverified.",
   "sources": [
     {
       "name": "Icy Veins characters",
@@ -936,5 +936,6 @@
       "has_interactions": null
     }
   ],
-  "item_sources": []
+  "item_sources": [],
+  "catalogRevision": 1
 }

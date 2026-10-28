@@ -1,19 +1,27 @@
-name: Validate v2 catalog and player rules
+name: Validate shared NTE catalogue
 on:
   workflow_dispatch:
   pull_request:
   push:
-    branches-ignore:
-      - main
+    paths:
+      - 'catalog/**'
+      - 'test-catalog-v2.cjs'
+      - 'src/catalog-rules.js'
+      - 'scripts/check-catalog-revision.cjs'
+      - '.github/workflows/validate-catalog.yml'
+permissions:
+  contents: read
 jobs:
   catalog-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validate catalogue schema, progression rules and backups
+      - name: Validate catalogue data and player rules
         run: node test-catalog-v2.cjs
-      - name: Syntax check frontend
-        run: node --check src/catalog-main.js
+      - name: Enforce central catalogue revision and stable IDs
+        run: node scripts/check-catalog-revision.cjs

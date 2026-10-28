@@ -1,8 +1,9 @@
-import catalog from './data/catalog.v2.json';
+import bundledCatalog from '../catalog/catalog.v2.json';
 import {invoke} from '@tauri-apps/api/core';
 import {SKILLS,defaultProgress,acquiredDefaults,parseInteger,interactionStatus,catalogItem,sourcesFor,verifyCatalog} from './catalog-rules.js';
 
-// The catalog ships with the app. Only profile records are written to SQLite.
+// Tauri owns the remote catalogue and a validated offline cache. Only player progress enters SQLite.
+let catalog=bundledCatalog;
 const GROUPS=['characters','arcs','bonds','items','achievements'];
 const LABELS={overview:'Overview',characters:'Characters',arcs:'Arcs',bonds:'Bond & Gifts',items:'Items',achievements:'Achievements'};
 const $=s=>document.querySelector(s);
@@ -11,8 +12,36 @@ const icons=import.meta.glob('./assets/roster-icons/*.{png,jpg,webp}',{eager:tru
 const iconsMap=new Map(Object.entries(icons).map(([k,v])=>[k.split('/').at(-1).split('.')[0],v]));
 let profile={characters:{},arcs:{},bonds:{},items:{},achievements:{}};
 let tab='overview',filter='all',query='',editing=null,chain=Promise.resolve(),lastSaveOk=true;
-const bondMap=new Map(catalog.character_bonds.map(b=>[b.character_id,b]));
-const charMap=new Map(catalog.characters.map(c=>[c.id,c]));
+let bondMap=new Map(catalog.character_bonds.map(b=>[b.character_id,b]));
+let charMap=new Map(catalog.characters.map(c=>[c.id,c]));
+let checkingCatalog=false;
+function catalogMessage(message, state=''){
+  const el=$('#catalog-status');if(el){el.textContent=message;el.dataset.state=state;}
+}
+function setCatalog(next,source,updated=false){
+  verifyCatalog(next);
+  // Profiles are never cleared or rewritten on a catalogue replacement.
+  catalog=next;
+  bondMap=new Map(catalog.character_bonds.map(b=>[b.character_id,b]));
+  charMap=new Map(catalog.characters.map(c=>[c.id,c]));
+  catalogMessage(`Database r${catalog.catalogRevision} · ${source==='cache'?'Local cache':'Bundled backup'} · Offline ready`,'ok');
+  if(updated)toast(`Shared database updated to revision ${catalog.catalogRevision}. Your progress is untouched.`);
+  render();
+}
+async function refreshCatalog(manual=false){
+  if(checkingCatalog)return;
+  checkingCatalog=true;const button=$('#catalog-check');button.disabled=true;
+  catalogMessage('Checking central database on GitHub…','checking');
+  try{
+    const result=await invoke('sync_game_catalog');
+    setCatalog(result.catalog,result.source,result.updated);
+    if(manual&&!result.updated)toast('Database is already up to date.');
+  }catch(e){
+    catalogMessage(`Database r${catalog.catalogRevision} · Offline mode (sync unavailable)`,'offline');
+    if(manual)toast(`Database check failed: ${String(e)}`);
+  }finally{checkingCatalog=false;button.disabled=false;}
+}
+
 function user(kind,id){return {...defaultProgress(kind),...profile[kind]?.[id]};}
 function owned(kind,item){const p=user(kind,item.id);return kind==='achievements'?p.status==='done':kind==='items'?p.quantity>0:kind==='bonds'?p.bond_level>0:!!p.owned;}
 function icon(c){const filename=c.small_portrait?.replace(/\.[^.]+$/,'')||c.id.slice(5);const fix=filename==='akane-rin'?'akane':filename;return iconsMap.get(fix)||null;}
@@ -101,7 +130,9 @@ async function commitEditor(event){event.preventDefault();if(!editing)return;con
 }
 async function backup(){if((await chain)===false || !lastSaveOk)return alert('Saving failed; cannot back up.');const {save:pick}=await import('@tauri-apps/plugin-dialog');const path=await pick({title:'Back up all NTE Tracker data',defaultPath:'nte-tracker-profile-'+new Date().toISOString().slice(0,10)+'.zip',filters:[{name:'ZIP archive',extensions:['zip']}]});if(path)try{await invoke('backup_zip',{path});toast('Backup saved: old data + v2 profile')}catch(e){alert('Backup failed: '+e)}}
 async function restore(){if(!confirm('Restore backup? A safety backup will be created first.'))return;const {open:pick}=await import('@tauri-apps/plugin-dialog');const path=await pick({title:'Restore NTE Tracker ZIP',filters:[{name:'ZIP archive',extensions:['zip']}]});if(!path)return;try{if(!lastSaveOk || await chain===false)return alert('Resolve save error before restore');await invoke('restore_zip',{path});profile={characters:{},arcs:{},bonds:{},items:{},achievements:{},...await invoke('load_user_profile')};render();toast('Restore complete')}catch(e){alert('Restore failed: '+e)}}
-function wire(){document.querySelectorAll('[data-tab]').forEach(el=>el.addEventListener('click',()=>changeTab(el.dataset.tab)));
+function wire(){
+ $('#catalog-check').addEventListener('click',()=>refreshCatalog(true));
+ document.querySelectorAll('[data-tab]').forEach(el=>el.addEventListener('click',()=>changeTab(el.dataset.tab)));
  $('#v2-filters').addEventListener('click',ev=>{const b=ev.target.closest('[data-filter]');if(b){filter=b.dataset.filter;render()}});
  $('#search').addEventListener('input',ev=>{query=ev.target.value;render()});
  $('#editor-form').addEventListener('submit',commitEditor);
@@ -112,8 +143,7 @@ function wire(){document.querySelectorAll('[data-tab]').forEach(el=>el.addEventL
   else if(action==='close-modal')$('#editor-dialog').close();
   else if(action==='backup-zip')await backup();else if(action==='restore-zip')await restore();
   else if(action==='show-data-directory'){alert(await invoke('get_data_directory'))}
-  else if(action==='import'||action==='clear'||action==='add'||action==='reset-excel')toast('Shared catalogue items are managed through app releases, not the player.');
-  else if(action==='export-csv'||action==='export-json')toast('Use ZIP Backup for your complete player profile.');
+  // Global catalogue editing is intentionally not exposed in the player UI.
  });
  document.addEventListener('change',async ev=>{const el=ev.target;
   if(el.dataset.action==='quantity'){try{const p=user('items',el.dataset.id);p.quantity=parseInteger(el.value,0,null,false);await save('items',el.dataset.id,p)}catch(e){alert(e.message);render()}}
@@ -122,4 +152,13 @@ function wire(){document.querySelectorAll('[data-tab]').forEach(el=>el.addEventL
 }
 try {verifyCatalog(catalog)}catch(e){$('#content').textContent='Invalid game catalogue: '+e.message;throw e}
 wire();
-invoke('load_user_profile').then(data=>{profile={...profile,...data};render();safeStatus('✓ Progress saved in SQLite')}).catch(err=>{$('#content').textContent='Unable to open SQLite profile: '+String(err);safeStatus('DATABASE ERROR')});
+Promise.all([invoke('load_user_profile'),invoke('load_game_catalog')]).then(([data,result])=>{
+  profile={...profile,...data};
+  setCatalog(result.catalog,result.source);
+  safeStatus('✓ Progress saved in SQLite');
+  // Non-blocking startup check; network failures never prevent offline use.
+  void refreshCatalog(false);
+}).catch(err=>{
+  $('#content').textContent='Unable to initialize local database: '+String(err);
+  safeStatus('DATABASE ERROR');
+});
