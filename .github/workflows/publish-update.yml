@@ -1,10 +1,7 @@
 name: Publish signed update
+# Release publication is manual to avoid accidental releases while main is the development branch.
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths-ignore:
-      - "catalog/**"
 permissions:
   contents: write
 concurrency:
