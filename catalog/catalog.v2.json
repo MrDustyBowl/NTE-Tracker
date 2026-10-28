@@ -19,7 +19,7 @@
   "characters": [
     {
       "id": "char:adler",
-      "name": "Chadler",
+      "name": "Adler",
       "rank": "A",
       "max_level": 80,
       "basic_attack_max": 10,
@@ -937,5 +937,5 @@
     }
   ],
   "item_sources": [],
-  "catalogRevision": 3
+  "catalogRevision": 4
 }
