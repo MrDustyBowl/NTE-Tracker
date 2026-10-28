@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+    paths-ignore:
+      - "catalog/**"
 permissions:
   contents: write
 concurrency:
@@ -20,6 +22,11 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: src-tauri
+      - name: Check catalogue schema and Rust implementation
+        run: |
+          node scripts/prepare-v2-live.cjs
+          node test-catalog-v2.cjs
+          cargo test --manifest-path src-tauri/Cargo.toml
       - name: Install dependencies
         run: npm install --no-audit --no-fund
       - name: Verify release signing configuration

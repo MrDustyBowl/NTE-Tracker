@@ -1,8 +1,13 @@
-name: Build Windows installer
+name: NTE v2 — Windows installer (development)
 on:
   workflow_dispatch:
+  push:
+    branches: [v2-development]
 permissions:
   contents: read
+concurrency:
+  group: nte-v2-windows
+  cancel-in-progress: false
 jobs:
   windows:
     runs-on: windows-latest
@@ -15,20 +20,24 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: src-tauri
-      - run: npm install --no-audit --no-fund
-      - run: node scripts/validate-updater-config.cjs
-      - name: Ensure the signing secret exists
-        shell: pwsh
-        env:
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+      - name: Verify release version and catalogue tests
         run: |
-          if ([string]::IsNullOrWhiteSpace($env:TAURI_SIGNING_PRIVATE_KEY)) { throw 'Missing TAURI_SIGNING_PRIVATE_KEY repository secret. See README updater setup.' }
-      - run: npm run tauri build
+          node scripts/prepare-v2-live.cjs
+          node test-catalog-v2.cjs
+          node --check src/catalog-main.js
+      - name: Check signed updater settings
+        run: node scripts/validate-updater-config.cjs
+      - name: Test Rust database and sync validation
+        run: cargo test --manifest-path src-tauri/Cargo.toml
+      - name: Install JS dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build Windows signed installer
+        run: npm run tauri build -- --bundles nsis
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
       - uses: actions/upload-artifact@v4
         with:
-          name: NTE-Tracker-Windows-Installer
+          name: NTE-Tracker-v2-Windows-Installer
           path: src-tauri/target/release/bundle/nsis/*.exe
           if-no-files-found: error

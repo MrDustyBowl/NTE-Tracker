@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "contentVersion": "2026.10.28.2",
+  "contentVersion": "2026.10.28.1",
   "scope": "Initial verified-structure catalogue. Character / Arc names from imported Excel; unknown game details intentionally left unverified.",
   "sources": [
     {
@@ -382,7 +382,7 @@
     {
       "id": "arc:blow-up-the-crowd",
       "name": "Blow Up the Crowd",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -390,7 +390,7 @@
     {
       "id": "arc:blushing-mirage",
       "name": "Blushing Mirage",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -398,7 +398,7 @@
     {
       "id": "arc:camellia-society",
       "name": "Camellia Society",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -406,7 +406,7 @@
     {
       "id": "arc:contemplative-cat",
       "name": "Contemplative Cat",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -414,7 +414,7 @@
     {
       "id": "arc:crime-and-punishment",
       "name": "Crime and Punishment",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -422,7 +422,7 @@
     {
       "id": "arc:day-off",
       "name": "Day Off",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -430,7 +430,7 @@
     {
       "id": "arc:eternal-waltz",
       "name": "Eternal Waltz",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -438,7 +438,7 @@
     {
       "id": "arc:far-side-of-the-moon",
       "name": "Far Side of the Moon",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -446,7 +446,7 @@
     {
       "id": "arc:fluff-of-fearlessness",
       "name": "Fluff of Fearlessness",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -454,7 +454,7 @@
     {
       "id": "arc:fluff-of-ferocity",
       "name": "Fluff of Ferocity",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -462,7 +462,7 @@
     {
       "id": "arc:fluff-of-finesse",
       "name": "Fluff of Finesse",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -470,7 +470,7 @@
     {
       "id": "arc:fluff-of-fleetness",
       "name": "Fluff of Fleetness",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -478,7 +478,7 @@
     {
       "id": "arc:fluff-of-fortitude",
       "name": "Fluff of Fortitude",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -486,7 +486,7 @@
     {
       "id": "arc:good-boy-s-grand-adventure",
       "name": "Good Boy's Grand Adventure",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -494,7 +494,7 @@
     {
       "id": "arc:hethereau-s-keeper",
       "name": "Hethereau's Keeper",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -502,7 +502,7 @@
     {
       "id": "arc:marching-beyond-time",
       "name": "Marching Beyond Time",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -510,7 +510,7 @@
     {
       "id": "arc:raging-flames",
       "name": "Raging Flames",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -518,7 +518,7 @@
     {
       "id": "arc:ravenous-blade",
       "name": "Ravenous Blade",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -526,7 +526,7 @@
     {
       "id": "arc:ready-ready",
       "name": "Ready-Ready",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -534,7 +534,7 @@
     {
       "id": "arc:reality-refuge",
       "name": "Reality Refuge",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -542,7 +542,7 @@
     {
       "id": "arc:song-of-the-whale",
       "name": "Song of the Whale",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -550,7 +550,7 @@
     {
       "id": "arc:stellar-veil",
       "name": "Stellar Veil",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -558,7 +558,7 @@
     {
       "id": "arc:tears-beneath-the-mask",
       "name": "Tears Beneath the Mask",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -566,7 +566,7 @@
     {
       "id": "arc:the-last-rose",
       "name": "The Last Rose",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -574,7 +574,7 @@
     {
       "id": "arc:the-rain-that-shook-the-world",
       "name": "The Rain That Shook The World",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -582,7 +582,7 @@
     {
       "id": "arc:the-wrong-gate",
       "name": "The Wrong Gate",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -590,7 +590,7 @@
     {
       "id": "arc:voice-of-the-voyager",
       "name": "Voice of the Voyager",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -598,7 +598,7 @@
     {
       "id": "arc:what-s-desired",
       "name": "What's Desired",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -606,7 +606,7 @@
     {
       "id": "arc:your-happiness-is-priceless",
       "name": "Your Happiness is Priceless",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -614,7 +614,7 @@
     {
       "id": "arc:youthful-fantasy",
       "name": "Youthful Fantasy",
-      "rarity": "gold",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -622,7 +622,7 @@
     {
       "id": "arc:a-time-will-come",
       "name": "A Time Will Come",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -630,7 +630,7 @@
     {
       "id": "arc:call-of-the-twisted-city",
       "name": "Call of the Twisted City",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -638,7 +638,7 @@
     {
       "id": "arc:clear-skies",
       "name": "Clear Skies",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -646,7 +646,7 @@
     {
       "id": "arc:cosmos-daze-wild-reverie",
       "name": "Cosmos Daze, Wild Reverie",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -654,7 +654,7 @@
     {
       "id": "arc:drawn-blade",
       "name": "Drawn Blade",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -662,7 +662,7 @@
     {
       "id": "arc:failing-you-heavy-in-my-heart",
       "name": "Failing You, Heavy in My Heart",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -670,7 +670,7 @@
     {
       "id": "arc:mind-royale",
       "name": "Mind Royale",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -678,7 +678,7 @@
     {
       "id": "arc:oraora",
       "name": "Oraora!",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -686,7 +686,7 @@
     {
       "id": "arc:shiny-days",
       "name": "Shiny Days",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -694,7 +694,7 @@
     {
       "id": "arc:the-fool-s-spring",
       "name": "The Fool's Spring",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -702,7 +702,7 @@
     {
       "id": "arc:the-forgotten",
       "name": "The Forgotten",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -710,7 +710,7 @@
     {
       "id": "arc:the-good-the-bad-the-bitter",
       "name": "The Good, The Bad, The Bitter",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -718,7 +718,7 @@
     {
       "id": "arc:the-great-thief",
       "name": "The Great Thief",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -726,7 +726,7 @@
     {
       "id": "arc:time-bandit",
       "name": "Time Bandit",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -734,7 +734,7 @@
     {
       "id": "arc:umbrella",
       "name": "Umbrella",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -742,7 +742,7 @@
     {
       "id": "arc:watch-your-heads",
       "name": "Watch Your Heads!",
-      "rarity": "purple",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -750,7 +750,7 @@
     {
       "id": "arc:real-music",
       "name": "\"Real Music\"",
-      "rarity": "blue",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -758,7 +758,7 @@
     {
       "id": "arc:be-happy",
       "name": "Be Happy",
-      "rarity": "blue",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -766,7 +766,7 @@
     {
       "id": "arc:dangerous-game",
       "name": "Dangerous Game",
-      "rarity": "blue",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -774,7 +774,7 @@
     {
       "id": "arc:first-step-to-success",
       "name": "First Step to Success",
-      "rarity": "blue",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -782,7 +782,7 @@
     {
       "id": "arc:us",
       "name": "Us.",
-      "rarity": "blue",
+      "rarity": null,
       "max_level": 80,
       "max_tier": 5,
       "icon": null
@@ -937,5 +937,5 @@
     }
   ],
   "item_sources": [],
-  "catalogRevision": 5
+  "catalogRevision": 1
 }
