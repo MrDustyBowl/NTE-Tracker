@@ -50,8 +50,11 @@ fn validate_state(data: &Value) -> CmdResult<()> {
                 return Err(format!("Invalid {kind} entry"));
             }
             if !ids.insert(id) { return Err(format!("Duplicate id in {kind}: {id}")); }
-            if let Some(file) = entry.get("portrait").and_then(Value::as_str) {
-                if !file.is_empty() && !valid_portrait_file(file) { return Err("Unsafe portrait filename".into()); }
+            for file in [
+                entry.get("portrait").and_then(Value::as_str),
+                entry.get("gift").and_then(|g| g.get("icon")).and_then(Value::as_str),
+            ].into_iter().flatten() {
+                if !file.is_empty() && !valid_portrait_file(file) { return Err("Unsafe image filename".into()); }
             }
         }
     }
@@ -100,6 +103,26 @@ fn valid_portrait_file(file: &str) -> bool {
         file.chars().all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '.' || c == '_') &&
         [".png", ".jpg", ".webp"].iter().any(|ext| file.ends_with(ext))
 }
+// A gift icon is stored in the same guarded local image folder as portraits.
+// Include every referenced file in JSON / ZIP validation and ZIP backups.
+fn referenced_images(data: &Value) -> CmdResult<Vec<String>> {
+    let mut seen = HashSet::new();
+    let mut found = Vec::new();
+    for kind in ["characters", "arcs"] {
+        for item in data[kind].as_array().ok_or("Invalid state")? {
+            for file in [
+                item.get("portrait").and_then(Value::as_str),
+                item.get("gift").and_then(|g| g.get("icon")).and_then(Value::as_str),
+            ].into_iter().flatten() {
+                if !file.is_empty() {
+                    if !valid_portrait_file(file) { return Err("Unsafe image filename".into()); }
+                    if seen.insert(file.to_owned()) { found.push(file.to_owned()); }
+                }
+            }
+        }
+    }
+    Ok(found)
+}
 fn image_extension(bytes: &[u8]) -> Option<&'static str> {
     if bytes.starts_with(b"\x89PNG\r\n\x1a\n") { Some("png") }
     else if bytes.starts_with(b"\xff\xd8\xff") { Some("jpg") }
@@ -119,18 +142,11 @@ fn create_archive(paths: &AppPaths, dest: &Path) -> CmdResult<()> {
     zip.start_file("data.json", opts).map_err(|e| e.to_string())?;
     zip.write_all(serde_json::to_string_pretty(&state).map_err(|e| e.to_string())?.as_bytes())
         .map_err(|e| e.to_string())?;
-    let mut included = HashSet::new();
-    for kind in ["characters", "arcs"] {
-        for item in state[kind].as_array().ok_or("Invalid state")? {
-            if let Some(name) = item.get("portrait").and_then(Value::as_str) {
-                if valid_portrait_file(name) && included.insert(name.to_owned()) {
-                    let p = paths.portraits().join(name);
-                    if !p.is_file() { return Err(format!("Missing portrait file: {name}")); }
-                    zip.start_file(format!("portraits/{name}"), opts).map_err(|e| e.to_string())?;
-                    zip.write_all(&fs::read(p).map_err(|e| e.to_string())?).map_err(|e| e.to_string())?;
-                }
-            }
-        }
+    for name in referenced_images(&state)? {
+        let p = paths.portraits().join(&name);
+        if !p.is_file() { return Err(format!("Missing image file: {name}")); }
+        zip.start_file(format!("portraits/{name}"), opts).map_err(|e| e.to_string())?;
+        zip.write_all(&fs::read(p).map_err(|e| e.to_string())?).map_err(|e| e.to_string())?;
     }
     zip.finish().map_err(|e| e.to_string())?;
     Ok(())
@@ -181,13 +197,9 @@ fn save_state(paths: tauri::State<'_, AppPaths>, data: Value) -> CmdResult<()> {
 #[tauri::command]
 fn restore_json(paths: tauri::State<'_, AppPaths>, data: Value) -> CmdResult<()> {
     validate_state(&data)?;
-    for kind in ["characters", "arcs"] {
-        for entry in data[kind].as_array().ok_or("Invalid JSON backup")? {
-            if let Some(file) = entry.get("portrait").and_then(Value::as_str) {
-                if !paths.portraits().join(file).is_file() {
-                    return Err(format!("Missing portrait {file}. Use a ZIP backup when moving between computers."));
-                }
-            }
+    for file in referenced_images(&data)? {
+        if !paths.portraits().join(&file).is_file() {
+            return Err(format!("Missing local image {file}. Use a ZIP backup when moving between computers."));
         }
     }
     create_safety_backup(&paths)?;
@@ -275,13 +287,9 @@ fn restore_zip(paths: tauri::State<'_, AppPaths>, path: String) -> CmdResult<Val
     let data = parsed.ok_or("Backup is missing data.json")?;
     // Validate all linked portraits before changing the database.
     let imported: HashSet<&str> = portraits.iter().map(|(n, _)| n.as_str()).collect();
-    for kind in ["characters", "arcs"] {
-        for entry in data[kind].as_array().ok_or("Invalid state")? {
-            if let Some(file) = entry.get("portrait").and_then(Value::as_str) {
-                if !imported.contains(file) && !paths.portraits().join(file).exists() {
-                    return Err(format!("Backup is missing the linked portrait: {file}"));
-                }
-            }
+    for file in referenced_images(&data)? {
+        if !imported.contains(file.as_str()) && !paths.portraits().join(&file).exists() {
+            return Err(format!("Backup is missing the linked image: {file}"));
         }
     }
     create_safety_backup(&paths)?;
