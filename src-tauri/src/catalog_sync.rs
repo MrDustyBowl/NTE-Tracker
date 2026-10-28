@@ -66,6 +66,8 @@ fn validate(input: &[u8]) -> Result<Value> {
         }
         for name in ["life_skill_1_max","life_skill_2_max"] {optional_nonneg_int(ch,name)?;}
         nullable_text(ch,"small_portrait")?;nullable_text(ch,"portrait")?;
+        nullable_text(ch,"element")?;nullable_text(ch,"arc_compatibility")?;
+        if let Some(skills)=ch.get("skill_names").filter(|x|!x.is_null()) { let obj=skills.as_object().ok_or("Invalid skill labels")?;for(key,label) in obj {if !["basic_attack","redirect_skill","ultimate_skill","support_skill","passive_1","passive_2","life_skill_1","life_skill_2"].contains(&key.as_str())||label.as_str().is_none_or(|s|s.trim().is_empty()||s.len()>220){return Err("Invalid skill label".into())}} }
     }
     for arc in array(&c,"arcs",30000)? {
         if arc.get("max_level").and_then(Value::as_u64)!=Some(80) || arc.get("max_tier").and_then(Value::as_u64)!=Some(5) {return Err("Invalid Arc cap".into())}
