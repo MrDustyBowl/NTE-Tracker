@@ -1,12 +1,12 @@
-/** Block accidental changes to a published catalogue without increasing its revision.
+/** Block accidental catalogue changes or revision rollback against the previous commit on main.
  * Run in CI with git fetch-depth 0; no remote catalogue network request needed. */
 const fs=require('node:fs');
 const cp=require('node:child_process');
 const path='catalog/catalog.v2.json';
 const local=JSON.parse(fs.readFileSync(path,'utf8'));
 let before;
-try{before=JSON.parse(cp.execFileSync('git',['show',`origin/main:${path}`],{encoding:'utf8',stdio:['ignore','pipe','ignore']}));}
-catch{console.log('No catalogue on origin/main yet. First publication is allowed.');process.exit(0)}
+try{before=JSON.parse(cp.execFileSync('git',['show',`${process.env.GITHUB_EVENT_NAME==='pull_request'?'HEAD^1':'HEAD^'}:${path}`],{encoding:'utf8',stdio:['ignore','pipe','ignore']}));}
+catch{console.log('No previous catalogue in this commit's parent. First publication allowed.');process.exit(0)}
 if(local.schemaVersion!==before.schemaVersion)throw Error('Catalogue schema version changed: requires a compatible app release');
 if(JSON.stringify(local)!==JSON.stringify(before) && local.catalogRevision<=before.catalogRevision)
  throw Error(`Catalogue data changed without increasing catalogRevision above ${before.catalogRevision}.`);
