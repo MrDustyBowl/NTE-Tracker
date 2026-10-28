@@ -3,6 +3,30 @@ import ZANKOU_AVATAR from './assets/zankou-avatar.webp';
 import { bundledArtworkFor, remoteArtworkFor } from './roster-art.js';
 import { invoke } from '@tauri-apps/api/core';
 import { save as nativeSave, open } from '@tauri-apps/plugin-dialog';
+
+import AVA_LACRIMOSA from './assets/roster-icons/lacrimosa.png';
+import AVA_JIUYUAN from './assets/roster-icons/jiuyuan.png';
+import AVA_IROI from './assets/roster-icons/iroi.png';
+import AVA_HOTORI from './assets/roster-icons/hotori.png';
+import AVA_HATHOR from './assets/roster-icons/hathor.png';
+import AVA_HANIEL from './assets/roster-icons/haniel.png';
+import AVA_CHAOS from './assets/roster-icons/chaos.png';
+import AVA_BLACKBIRD from './assets/roster-icons/blackbird.png';
+import AVA_BAICANG from './assets/roster-icons/baicang.png';
+import AVA_AURELIA from './assets/roster-icons/aurelia.png';
+import AVA_AKANE from './assets/roster-icons/akane.png';
+import AVA_ADLER from './assets/roster-icons/adler.png';
+import AVA_FADIA from './assets/roster-icons/fadia.png';
+import AVA_EDGAR from './assets/roster-icons/edgar.png';
+import AVA_DAFFODILL from './assets/roster-icons/daffodill.png';
+import AVA_CHIZ from './assets/roster-icons/chiz.png';
+import AVA_ZERO from './assets/roster-icons/zero.png';
+import AVA_ZANKOU from './assets/roster-icons/zankou.png';
+import AVA_LINKO from './assets/roster-icons/linko.png';
+import AVA_SAKIRI from './assets/roster-icons/sakiri.png';
+import AVA_SKIA from './assets/roster-icons/skia.png';
+import AVA_MINT from './assets/roster-icons/mint.png';
+import AVA_NANALLY from './assets/roster-icons/nanally.png';
 'use strict';
 (() => {
 const SKILLS=[['basic','Basic Attack'],['redirect','Redirect Skill'],['ultimate','Ultimate Skill'],['support','Support Skill'],['esper','Esper Cycle Upgrade'],['passive','Combat Passive'],['life1','Life Skill 1'],['life2','Life Skill 2']];
@@ -20,6 +44,15 @@ function disp(v){return v===null||v===undefined||v===''?'—':String(v)}
 function safe(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 let saveQueue=Promise.resolve(),saveNumber=0;
 const PORTRAITS=new Map();
+
+const SMALL_AVATARS=new Map([
+  ['lacrimosa',AVA_LACRIMOSA],['jiuyuan',AVA_JIUYUAN],['iroi',AVA_IROI],['hotori',AVA_HOTORI],
+  ['hathor',AVA_HATHOR],['haniel',AVA_HANIEL],['chaos',AVA_CHAOS],['blackbird',AVA_BLACKBIRD],
+  ['baicang',AVA_BAICANG],['aurelia',AVA_AURELIA],['akane',AVA_AKANE],['adler',AVA_ADLER],
+  ['fadia',AVA_FADIA],['edgar',AVA_EDGAR],['daffodill',AVA_DAFFODILL],['chiz',AVA_CHIZ],
+  ['zero',AVA_ZERO],['zankou',AVA_ZANKOU],['linko',AVA_LINKO],['sakiri',AVA_SAKIRI],
+  ['skia',AVA_SKIA],['mint',AVA_MINT],['nanally',AVA_NANALLY]
+]);
 function save(){
   const snapshot=clone(state),number=++saveNumber;
   $('.save-state').lastChild.textContent=' Saving to SQLite...';
@@ -94,6 +127,8 @@ function characterCard(c){let avatar=c.portrait&&PORTRAITS.get(c.portrait)?`<img
 
 // v1.2 — NTE-inspired three-column character command center.
 function charImage(c,kind='portrait'){
+  const small=kind==='avatar'?SMALL_AVATARS.get(normalizedName(c.name)):null;
+  if(small)return `<img class="small-avatar-art" src="${safe(small)}" alt="${safe(c.name)} small icon" loading="lazy">`;
   const custom=c.portrait&&PORTRAITS.get(c.portrait);
   if(custom)return `<img src="${safe(custom)}" alt="${safe(c.name)} portrait">`;
   const bundled=bundledArtworkFor(c.name);
