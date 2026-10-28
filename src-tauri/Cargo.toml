@@ -1,6 +1,6 @@
 [package]
 name = "nte-tracker"
-version = "1.2.2"
+version = "1.2.3"
 description = "Offline Neverness to Everness progress tracker"
 authors = ["NTE Tracker"]
 edition = "2021"

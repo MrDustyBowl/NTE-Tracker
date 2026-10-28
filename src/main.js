@@ -25,6 +25,7 @@ import AVA_ZANKOU from './assets/roster-icons/zankou.png';
 import AVA_LINKO from './assets/roster-icons/linko.png';
 import AVA_SAKIRI from './assets/roster-icons/sakiri.png';
 import AVA_SKIA from './assets/roster-icons/skia.png';
+import AVA_SHINKU from './assets/roster-icons/shinku.png';
 import AVA_MINT from './assets/roster-icons/mint.png';
 import AVA_NANALLY from './assets/roster-icons/nanally.png';
 'use strict';
@@ -34,7 +35,23 @@ const TITLES={overview:['Overview','Your progression, all in one place.','Your c
 const $=s=>document.querySelector(s);
 const clone=o=>JSON.parse(JSON.stringify(o));
 const blank=()=>({characters:[],arcs:[],achievements:[]});
-function normalizeStore(o){let t=blank();for(let k of Object.keys(t))t[k]=Array.isArray(o?.[k])?o[k].filter(x=>x&&typeof x==='object'):[];for(let c of t.characters){c.skills=c.skills||{};c.gift=c.gift||null;if(c.bond===undefined)c.bond=null;}return t}
+// Initial character ranks for the original Excel roster. Users can change them later.
+const A_RANK_NAMES=new Set(['Mint','Skia','Edgar','Adler','Aurelia','Haniel'].map(normalizedName));
+const ORIGINAL_ROSTER=new Set([
+  'adler','akane','aurelia','baicang','blackbird','chaos','chiz','daffodil',
+  'edgar','fadia','haniel','hathor','hotori','iroi','jiuyuan','lacrimosa',
+  'linko','mint','nanally','sakiri','shinku','skia','zankou','zero'
+].map(normalizedName));
+function defaultRankFor(name){const n=normalizedName(name);return ORIGINAL_ROSTER.has(n)?(A_RANK_NAMES.has(n)?'A':'S'):null}
+function normalizeStore(o){
+  let t=blank();for(let k of Object.keys(t))t[k]=Array.isArray(o?.[k])?o[k].filter(x=>x&&typeof x==='object'):[];
+  for(let c of t.characters){
+    c.skills=c.skills||{};c.gift=c.gift||null;if(c.bond===undefined)c.bond=null;
+    // Fill only missing rank values, never overwrite a rank already edited by the user.
+    if(!c.rank)c.rank=defaultRankFor(c.name);
+  }
+  return t;
+}
 
 let state=blank(),tab='overview',editId=null,filters={search:'',category:'all',status:'all',sort:'name'},toastTimer;
 let selectedCharacterId=null,characterRosterFilter='all',characterRosterSort='name';
@@ -51,8 +68,8 @@ const SMALL_AVATARS=new Map([
   ['baicang',AVA_BAICANG],['aurelia',AVA_AURELIA],['akane',AVA_AKANE],['adler',AVA_ADLER],
   ['fadia',AVA_FADIA],['edgar',AVA_EDGAR],['daffodill',AVA_DAFFODILL],['chiz',AVA_CHIZ],
   ['zero',AVA_ZERO],['zankou',AVA_ZANKOU],['linko',AVA_LINKO],['sakiri',AVA_SAKIRI],
-  ['skia',AVA_SKIA],['mint',AVA_MINT],['nanally',AVA_NANALLY]
-]);
+  ['skia',AVA_SKIA],['shinku',AVA_SHINKU],['mint',AVA_MINT],['nanally',AVA_NANALLY]
+].map(([name,icon])=>[normalizedName(name),icon]));
 function save(){
   const snapshot=clone(state),number=++saveNumber;
   $('.save-state').lastChild.textContent=' Saving to SQLite...';
@@ -71,7 +88,15 @@ async function hydratePortraits(){
   }));
 }
 async function bootstrap(){
-  try{state=normalizeStore(await invoke('load_state'));await hydratePortraits();setupTab('overview');}
+  try{
+    const previous=await invoke('load_state');
+    // Determine if ranks are missing BEFORE normalizeStore edits the character objects.
+    const needsRankMigration=previous.characters?.some(c=>!c.rank&&defaultRankFor(c.name));
+    state=normalizeStore(previous);
+    await hydratePortraits();setupTab('overview');
+    // On upgrade, persist ranks in SQLite so they also appear in exports/backups.
+    if(needsRankMigration)await save();
+  }
   catch(err){console.error(err);$('#content').textContent='Unable to load SQLite data: '+String(err);alert('Unable to load the database: '+String(err));}
 }
 async function backupZip(){

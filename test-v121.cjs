@@ -8,7 +8,8 @@ const a=db.characters.find(c=>c.name==='Adler');a.rank='A';
 const ar=db.arcs[0];ar.rarity='green';
 const fields=new Map(),listeners={};
 function elem(k){if(!fields.has(k))fields.set(k,{innerHTML:'',textContent:'',value:'',hidden:false,style:{},dataset:{},checked:false,classList:{toggle(){},add(){},remove(){}},setAttribute(){},addEventListener(type,fn){listeners[k+'::'+type]=fn},focus(){},showModal(){this.open=true},close(){this.open=false},querySelector(x){return elem('sub'+x)},lastChild:{textContent:''}});return fields.get(k)}
-const code=fs.readFileSync(__dirname+'/src/main.js','utf8').replace(/^import .*?;\s*$/gm,'');
+const raw=fs.readFileSync(__dirname+'/src/main.js','utf8');
+const code=raw.replace(/^import .*?;\s*$/gm,'');
 const mock={console,crypto:require('node:crypto').webcrypto,setTimeout,clearTimeout,
  ZANKOU_ART:'zankou-art.webp',ZANKOU_AVATAR:'zankou-avatar.webp',
  bundledArtworkFor:()=>null,remoteArtworkFor:()=>({url:'https://images.example/a.png'}),HTMLImageElement:class {},
@@ -20,6 +21,7 @@ const mock={console,crypto:require('node:crypto').webcrypto,setTimeout,clearTime
   if(cmd==='save_portrait'){pictureCount++;return `img-test-${pictureCount}.png`;}if(cmd==='read_portrait')return 'data:image/png;base64,aW1n';
   if(cmd==='get_data_directory')return 'TEST';throw Error('unmocked command '+cmd)}
 };
+for(const [,name] of raw.matchAll(/^import (AVA_\w+) from/gm)) mock[name]='asset://'+name;
 vm.createContext(mock);vm.runInContext(code,mock);
 const settle=()=>new Promise(r=>setTimeout(r,25));
 function tab(name){listeners['doc::click']({target:{closest(selector){return selector==='[data-tab]'?{dataset:{tab:name}}:null;}}});}
