@@ -1,12 +1,14 @@
-name: NTE v2 — Windows installer (development)
+name: NTE Windows CI installer (no release)
 on:
   workflow_dispatch:
   push:
-    branches: [v2-development]
+    branches: [main]
+    paths-ignore:
+      - 'catalog/**'
 permissions:
   contents: read
 concurrency:
-  group: nte-v2-windows
+  group: nte-windows-ci-main
   cancel-in-progress: false
 jobs:
   windows:
@@ -38,6 +40,6 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
       - uses: actions/upload-artifact@v4
         with:
-          name: NTE-Tracker-v2-Windows-Installer
+          name: NTE-Tracker-Windows-CI-Installer
           path: src-tauri/target/release/bundle/nsis/*.exe
           if-no-files-found: error
