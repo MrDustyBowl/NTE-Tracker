@@ -98,3 +98,8 @@
 .cc-empty{padding:60px 20px;text-align:center;border:1px dashed #72617a;border-radius:16px}
 @media(max-width:1160px){.cc-layout{grid-template-columns:minmax(0,1fr) 190px}.cc-grid{grid-template-columns:1fr}.cc-hero h2{font-size:34px}}
 @media(max-width:800px){.cc-layout{grid-template-columns:1fr}.cc-sidebar{position:static}.cc-scroll{max-height:350px}.cc-hero{grid-template-columns:100px 1fr}.cc-hero-image{height:140px}}
+
+/* v2.2 owned asset-sync status */
+#assets-status[data-state='offline']{color:var(--v2-sub)}
+#assets-status[data-state='checking']{color:#e0c48e}
+#assets-check:disabled{opacity:.55;cursor:wait}

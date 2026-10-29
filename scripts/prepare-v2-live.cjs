@@ -6,7 +6,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 function readJson(p){return JSON.parse(fs.readFileSync(p,'utf8'))}
 function writeJson(p,value){fs.writeFileSync(p,JSON.stringify(value,null,2)+'\n')}
-const version='2.1.0';
+const version='2.2.0';
 const packagePath='package.json',tauriPath='src-tauri/tauri.conf.json',cargoPath='src-tauri/Cargo.toml';
 if (!fs.existsSync('catalog/catalog.v2.json'))throw Error('Missing global catalog/catalog.v2.json');
 const app=readJson(tauriPath);

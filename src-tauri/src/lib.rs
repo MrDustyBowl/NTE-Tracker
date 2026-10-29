@@ -1,5 +1,6 @@
 mod catalog_profile;
 mod catalog_sync;
+mod assets_sync;
 use base64::{engine::general_purpose::STANDARD, Engine as _};
 use chrono::Local;
 use rusqlite::{params, Connection};
@@ -202,6 +203,19 @@ async fn sync_game_catalog(paths: tauri::State<'_, AppPaths>) -> CmdResult<Value
 }
 
 #[tauri::command]
+fn load_asset_library(paths: tauri::State<'_, AppPaths>) -> CmdResult<Value> {
+    assets_sync::library(&paths.root)
+}
+#[tauri::command]
+async fn sync_asset_library(paths: tauri::State<'_, AppPaths>) -> CmdResult<Value> {
+    assets_sync::sync(&paths.root.clone()).await
+}
+#[tauri::command]
+fn read_cached_asset(paths: tauri::State<'_, AppPaths>, key: String) -> CmdResult<String> {
+    assets_sync::read_image(&paths.root, &key)
+}
+
+#[tauri::command]
 fn load_user_profile(paths: tauri::State<'_, AppPaths>) -> CmdResult<Value> {
     catalog_profile::read(&open_db(&paths)?)
 }
@@ -367,7 +381,8 @@ pub fn run() {
             load_state, save_state, reset_to_excel, restore_json, save_portrait, read_portrait,
             backup_zip, restore_zip, get_data_directory, backup_before_update,
             load_user_profile, save_user_progress, reset_user_profile,
-            load_game_catalog, sync_game_catalog
+            load_game_catalog, sync_game_catalog,
+            load_asset_library, sync_asset_library, read_cached_asset
         ])
         .run(tauri::generate_context!())
         .expect("NTE Tracker startup failed");

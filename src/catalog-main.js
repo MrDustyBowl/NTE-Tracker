@@ -16,6 +16,44 @@ let selectedCharId=null;
 let bondMap=new Map(catalog.character_bonds.map(b=>[b.character_id,b]));
 let charMap=new Map(catalog.characters.map(c=>[c.id,c]));
 let checkingCatalog=false;
+// Assets sync independently from global game data and personal SQLite progress.
+let cachedImages=new Map(),availableImageKeys=new Set(),loadingImageKeys=new Set();
+let checkingImages=false,assetRevision=0,assetRedrawTimer=null;
+function artStatus(message,state='ok'){const node=$('#assets-status');if(node){node.textContent=message;node.dataset.state=state;}}
+function scheduleArtRedraw(){if(assetRedrawTimer)return;assetRedrawTimer=setTimeout(()=>{assetRedrawTimer=null;render()},100);}
+function requestImage(key){
+  if(!availableImageKeys.has(key)||cachedImages.has(key)||loadingImageKeys.has(key))return;
+  loadingImageKeys.add(key);
+  invoke('read_cached_asset',{key}).then(value=>{
+    if(typeof value==='string'&&value.startsWith('data:image/png;base64,')){
+      cachedImages.set(key,value);scheduleArtRedraw();
+    }
+  }).catch(()=>{availableImageKeys.delete(key)}).finally(()=>loadingImageKeys.delete(key));
+}
+async function loadAssetIndex(){
+  const result=await invoke('load_asset_library');
+  const revision=Number(result.revision)||0;
+  if(revision!==assetRevision)cachedImages.clear();
+  assetRevision=revision;
+  availableImageKeys=new Set(result.keys||[]);
+  artStatus(revision?`Images r${revision} · ${availableImageKeys.size} cached · Offline ready`:'Images · Bundled fallback ready');
+  scheduleArtRedraw();
+}
+async function refreshAssets(manual=false){
+  if(checkingImages)return;
+  checkingImages=true;
+  const btn=$('#assets-check');if(btn)btn.disabled=true;
+  artStatus('Checking images on GitHub…','checking');
+  try{
+    const outcome=await invoke('sync_asset_library');
+    await loadAssetIndex();
+    if(manual)toast(outcome.updated?`Image library updated to r${outcome.revision}`:outcome.downloaded?`${outcome.downloaded} image(s) repaired`:'Image library is already up to date.');
+  }catch(e){
+    artStatus(`Images r${assetRevision} · Offline fallback`,'offline');
+    if(manual)toast(`Image check failed: ${String(e)}`);
+  }finally{checkingImages=false;if(btn)btn.disabled=false;}
+}
+
 function catalogMessage(message, state=''){
   const el=$('#catalog-status');if(el){el.textContent=message;el.dataset.state=state;}
 }
@@ -45,7 +83,14 @@ async function refreshCatalog(manual=false){
 
 function user(kind,id){return {...defaultProgress(kind),...profile[kind]?.[id]};}
 function owned(kind,item){const p=user(kind,item.id);return kind==='achievements'?p.status==='done':kind==='items'?p.quantity>0:kind==='bonds'?p.bond_level>0:!!p.owned;}
-function icon(c){const filename=c.small_portrait?.replace(/\.[^.]+$/,'')||c.id.slice(5);const fix=filename==='akane-rin'?'akane':filename;return iconsMap.get(fix)||null;}
+function icon(c){
+  const key=`avatar:${c.id}`;
+  requestImage(key);
+  const filename=c.small_portrait?.replace(/\.[^.]+$/,'')||c.id.slice(5);
+  const fix=filename==='akane-rin'?'akane':filename;
+  return cachedImages.get(key)||iconsMap.get(fix)||null;
+}
+function bigArt(c){const key=`portrait:${c.id}`;requestImage(key);return cachedImages.get(key)||icon(c);}
 function toast(message){const el=$('#toast');el.textContent=message;el.classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('visible'),3500)}
 function safeStatus(text){const el=$('.save-state');if(el)el.textContent=text}
 async function save(kind,id,data){profile[kind][id]=data;safeStatus('Saving to SQLite…');lastSaveOk=true;chain=chain.then(()=>invoke('save_user_progress',{kind,id,progress:data})).then(()=>{safeStatus('✓ Progress saved');return true}).catch(e=>{lastSaveOk=false;safeStatus('SAVE FAILED');alert('Could not save progress: '+String(e));return false});render();return chain;}
@@ -86,7 +131,7 @@ function renderCharacterWorkspace(){
   function detail(c){
     const p=user('characters',c.id),b=user('bonds',c.id),info=bondMap.get(c.id)||{};
     const skills=[['basic_attack_level','Basic Attack','basic_attack_max','basic_attack'],['redirect_skill_level','Redirect Skill','redirect_skill_max','redirect_skill'],['ultimate_skill_level','Ultimate Skill','ultimate_skill_max','ultimate_skill'],['support_skill_level','Support Skill','support_skill_max','support_skill']];
-    const art=icon(c),aw=p.awakening_level??0;
+    const art=bigArt(c),aw=p.awakening_level??0;
     const skillPanel=panel("COMBAT SKILLS",skills.map(([field,label,cap,key])=>bar('characters',c,p,field,c.skill_names?.[key]?`${label} · ${c.skill_names[key]}`:label,1,c[cap])).join('')+`<h4>PASSIVES</h4>`+[1,2].map(i=>`<label class="cc-check"><span>${esc(c.skill_names?.[`passive_${i}`]||`Passive ${i}`)}</span><input type="checkbox" data-progress-kind="characters" data-progress-field="passive_${i}_unlocked" data-id="${esc(c.id)}" ${p[`passive_${i}_unlocked`]?'checked':''}></label>`).join(''));
     const lifePanel=panel("LIFE SKILLS",[1,2].map(i=>{
       const max=c[`life_skill_${i}_max`],key=`life_skill_${i}_level`,name=c.skill_names?.[`life_skill_${i}`]||`Life Skill ${i}`;
@@ -168,6 +213,7 @@ async function backup(){if((await chain)===false || !lastSaveOk)return alert('Sa
 async function restore(){if(!confirm('Restore backup? A safety backup will be created first.'))return;const {open:pick}=await import('@tauri-apps/plugin-dialog');const path=await pick({title:'Restore NTE Tracker ZIP',filters:[{name:'ZIP archive',extensions:['zip']}]});if(!path)return;try{if(!lastSaveOk || await chain===false)return alert('Resolve save error before restore');await invoke('restore_zip',{path});profile={characters:{},arcs:{},bonds:{},items:{},achievements:{},...await invoke('load_user_profile')};render();toast('Restore complete')}catch(e){alert('Restore failed: '+e)}}
 function wire(){
  $('#catalog-check').addEventListener('click',()=>refreshCatalog(true));
+  $('#assets-check').addEventListener('click',()=>refreshAssets(true));
  document.querySelectorAll('[data-tab]').forEach(el=>el.addEventListener('click',()=>changeTab(el.dataset.tab)));
  $('#v2-filters').addEventListener('click',ev=>{const b=ev.target.closest('[data-filter]');if(b){filter=b.dataset.filter;render()}});
  $('#search').addEventListener('input',ev=>{query=ev.target.value;render()});
@@ -198,6 +244,7 @@ Promise.all([invoke('load_user_profile'),invoke('load_game_catalog')]).then(([da
   safeStatus('✓ Progress saved in SQLite');
   // Non-blocking startup check; network failures never prevent offline use.
   void refreshCatalog(false);
+  void loadAssetIndex().then(()=>refreshAssets(false)).catch(()=>artStatus('Images · Bundled fallback ready','offline'));
 }).catch(err=>{
   $('#content').textContent='Unable to initialize local database: '+String(err);
   safeStatus('DATABASE ERROR');

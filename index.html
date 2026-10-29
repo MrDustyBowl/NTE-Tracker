@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="dark">
-<title>NTE Tracker 2.1</title>
+<title>NTE Tracker 2.2</title>
 <link rel="stylesheet" href="/src/style.css">
 <link rel="stylesheet" href="/src/catalog-v2.css">
 </head>
@@ -29,6 +29,7 @@
       <div class="header-copy"><div class="eyebrow">SHARED DATABASE / PRIVATE PROGRESS</div><h1 id="page-title">Overview</h1><p class="subtitle" id="page-subtitle">Choose what you own and track only your progress.</p></div>
       <div class="header-actions">
         <button class="btn ghost" id="catalog-check" type="button" title="Sync game data from GitHub without updating the application">↻ Check Database</button>
+        <button class="btn ghost" id="assets-check" type="button" title="Download verified image updates from our own GitHub; no reinstall needed">↻ Check Images</button>
         <button class="btn ghost update-button" id="update-check" type="button" title="Check GitHub for signed updates">↻ Check Updates</button>
         <details class="tools-menu"><summary class="btn ghost">☷ Data &amp; Tools</summary><div class="tools-popover">
           <div class="tools-caption">BACKUPS</div>
@@ -45,6 +46,7 @@
       <div class="update-track" id="update-track" hidden><span id="update-progress"></span></div>
     </section>
     <div class="catalog-sync-bar"><span class="catalog-sync-dot"></span><span id="catalog-status" data-state="checking" role="status">Loading shared database…</span><span class="catalog-sync-hint">Content updates require no app reinstall; progress remains local.</span></div>
+    <div class="catalog-sync-bar"><span class="catalog-sync-dot"></span><span id="assets-status" data-state="checking" role="status">Loading image cache…</span><span class="catalog-sync-hint">Owned image library · SHA-256 verified · Offline fallback.</span></div>
     <section class="metrics" aria-label="Current statistics" id="metrics"></section>
     <div id="list-intro"><div class="section-heading"><div><h2 id="list-heading">At a glance</h2><p id="list-description">A shared content catalog, a private local progress profile.</p></div></div></div>
     <div class="toolbar" id="toolbar"><label class="search" for="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search..." autocomplete="off"></label><div class="toolbar-right"><div class="v2-filter-controls" id="v2-filters"><button type="button" data-filter="all">All</button><button type="button" data-filter="owned">Owned / Done</button><button type="button" data-filter="missing">Missing</button><button type="button" data-filter="inprogress">In progress</button></div><select class="select" id="category-filter" aria-label="Achievement category" hidden></select><select class="select" id="status-filter" aria-label="Achievement status" hidden><option value="all">All statuses</option><option value="todo">Not completed</option><option value="done">Completed</option></select><select class="select" id="sort" aria-label="Sort by"></select></div></div>

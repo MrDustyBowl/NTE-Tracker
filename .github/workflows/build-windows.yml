@@ -5,6 +5,12 @@ on:
     branches: [main]
     paths-ignore:
       - 'catalog/**'
+      - 'assets/manifest.v1.json'
+      - 'src/assets/characters/avatars/**'
+      - 'assets/characters/**'
+      - 'assets/arcs/**'
+      - 'assets/items/**'
+      - 'assets/elements/**'
 permissions:
   contents: read
 concurrency:
@@ -27,6 +33,7 @@ jobs:
           node scripts/prepare-v2-live.cjs
           node test-catalog-v2.cjs
           node --check src/catalog-main.js
+          node scripts/check-assets.cjs
       - name: Check signed updater settings
         run: node scripts/validate-updater-config.cjs
       - name: Test Rust database and sync validation

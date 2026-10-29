@@ -1,6 +1,6 @@
 [package]
 name = "nte-tracker"
-version = "2.1.0"
+version = "2.2.0"
 description = "Offline Neverness to Everness progress tracker"
 authors = ["NTE Tracker"]
 edition = "2021"
@@ -29,3 +29,6 @@ tauri-plugin-process = "2"
 
 # HTTPS-only read-only public catalogue synchronization
 reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+
+# Content-addressed owned artwork cache, verified with SHA-256
+sha2 = "0.10"
