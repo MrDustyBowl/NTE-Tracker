@@ -1,0 +1,22 @@
+IMPORT AVATARS INTO NTE TRACKER (WINDOWS)
+
+1) Close NTE Tracker and open your local NTE-Tracker repo directory.
+2) Extract this ZIP into the ROOT of the repo (where package.json is).
+3) Keep the folder structure and allow overwriting:
+   src/assets/roster-icons/linko.png
+4) In GitHub Desktop, select main; commit and Push origin.
+5) On GitHub Actions, download the new Windows CI installer artifact.
+6) Install the new build on top of your current app and check Linko. Skia must remain a wolf.
+
+The 24 192x192 standardized images are stored under:
+  src/assets/characters/avatars/
+
+No change to user progress or catalog revision is needed; changes to bundled
+art are distributed via installer builds (not Check Database).
+
+FOR LARGE PORTRAITS (OPTIONAL):
+- Execute: py -3 -m pip install Pillow
+- Execute: py -3 download_portrait_candidates.py
+- This downloads 16 upstream PNG candidates ONCE, to .staging_portraits/.
+- The script NEVER modifies the app and flags all candidates UNREVIEWED.
+- Review the generated .staging_portraits/CANDIDATES_REVIEW.png carefully.
