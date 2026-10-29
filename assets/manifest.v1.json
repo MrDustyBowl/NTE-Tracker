@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "revision": 1,
+  "assets": [
+    {
+      "key": "avatar:char:adler",
+      "path": "src/assets/characters/avatars/adler.png",
+      "sha256": "8294ca45c46275f74f33393255f363e66d6204777a924db38b4c4d3c8a1a1ff5",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:akane-rin",
+      "path": "src/assets/characters/avatars/akane-rin.png",
+      "sha256": "e8607125d49ffd1d1f7894dd0663129730661edd05eb6e17cfa3d144c08f99e3",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:aurelia",
+      "path": "src/assets/characters/avatars/aurelia.png",
+      "sha256": "98590c949fad1269c8c9bfa2033d0237d174be7d8a0fbb01834f263481f8d9cf",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:baicang",
+      "path": "src/assets/characters/avatars/baicang.png",
+      "sha256": "44e506da73b8bae58d6f3f4a706a99f1a9aaffc4ba46ebc1a96cc508030893b5",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:blackbird",
+      "path": "src/assets/characters/avatars/blackbird.png",
+      "sha256": "58a7631f80b4207c155362227f86cb31ff0491a74951553a9d5aa8d0c4bf3fa4",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:chaos",
+      "path": "src/assets/characters/avatars/chaos.png",
+      "sha256": "503903c390f92fa67118639b0375916e9fce428db7549e1c4a0a9519219e087c",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:chiz",
+      "path": "src/assets/characters/avatars/chiz.png",
+      "sha256": "1d84dccd2e9c5fb4e8ccfbf3e2ab91364391c249c42f9fdcda8f2e493bf20191",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:daffodill",
+      "path": "src/assets/characters/avatars/daffodill.png",
+      "sha256": "f62fc562fa3c1354e3afb72868b0404a42799b56938292e9f5180b37c5e5730b",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:edgar",
+      "path": "src/assets/characters/avatars/edgar.png",
+      "sha256": "3f0d4591e37c9a30feffa8347acbc31627f45841bd252f8914eb5fe1ba274526",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:fadia",
+      "path": "src/assets/characters/avatars/fadia.png",
+      "sha256": "aaa9bbb6dcf155d58c268176faa7ad070c1619dddb60cf904280dbaa89516a46",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:haniel",
+      "path": "src/assets/characters/avatars/haniel.png",
+      "sha256": "3d5e02a3dd348ccf8855ca56b1387b8c7989d4656d525296c0aea76c8628279b",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:hathor",
+      "path": "src/assets/characters/avatars/hathor.png",
+      "sha256": "4360afd8113169f19a9ccf0742c21ddc67b3dc1de88d0b678e75e64f8badd2db",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:hotori",
+      "path": "src/assets/characters/avatars/hotori.png",
+      "sha256": "30a69cf2d91100c731eebf8318744886e6bc0987315f0cbdf1bf4604370f4829",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:iroi",
+      "path": "src/assets/characters/avatars/iroi.png",
+      "sha256": "b6e633928d29456a39bd1470b38af21ee382bc502c834fc3ac5acc63a77269c1",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:jiuyuan",
+      "path": "src/assets/characters/avatars/jiuyuan.png",
+      "sha256": "069bc08b6a3c459687b60bfae827172e1934d6b2b64c9673ff788d76e32b7696",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:lacrimosa",
+      "path": "src/assets/characters/avatars/lacrimosa.png",
+      "sha256": "85865acc2b063e98785cb6e4150981b7d9c4c933ded050968b3c3d7fe679b7ad",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:linko",
+      "path": "src/assets/characters/avatars/linko.png",
+      "sha256": "323e6d8d8772b5c4717a1aacbeb9a74f0ffffdf39a956b28e22aa8fc9d8b5863",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:mint",
+      "path": "src/assets/characters/avatars/mint.png",
+      "sha256": "91ecab10e23406a55147b42997164a3edb2c5082b78ad4b3c4268049cdf4d39c",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:nanally",
+      "path": "src/assets/characters/avatars/nanally.png",
+      "sha256": "44feb9621d19c2940aa49a282b694ccb76967412584f1a19ca10cd836b42d1af",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:sakiri",
+      "path": "src/assets/characters/avatars/sakiri.png",
+      "sha256": "9e599ef49e12f9ab70c43b983d343139c5964f58c135e3d73bfde5020b033f50",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:shinku",
+      "path": "src/assets/characters/avatars/shinku.png",
+      "sha256": "a7570dcf9a23ac8ce56bf855516685f68a650b28a4648c5896ebf1075972b58a",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:skia",
+      "path": "src/assets/characters/avatars/skia.png",
+      "sha256": "b4c06e34b37be01d3ffda7ceef4ade67e74b128193819f708c5b7e38d9aacc0b",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:zankou",
+      "path": "src/assets/characters/avatars/zankou.png",
+      "sha256": "3baad64604b19b2d1256581c6623a3a153cf4967a24099f31631a8a967d69534",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "key": "avatar:char:zero",
+      "path": "src/assets/characters/avatars/zero.png",
+      "sha256": "5b5ed35fde742c4b6b7a5e03b636d091ca4da9a7948b981da575fade00b14eec",
+      "width": 192,
+      "height": 192
+    }
+  ]
+}
