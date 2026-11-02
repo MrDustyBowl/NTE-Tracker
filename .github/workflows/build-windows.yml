@@ -33,6 +33,8 @@ jobs:
           node scripts/prepare-v2-live.cjs
           node test-catalog-v2.cjs
           node --check src/catalog-main.js
+          node --check src/concept-characters.js
+          node scripts/test-concept-ui.mjs
           node scripts/check-assets.cjs
       - name: Check signed updater settings
         run: node scripts/validate-updater-config.cjs

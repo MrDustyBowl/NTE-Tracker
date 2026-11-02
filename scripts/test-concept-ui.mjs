@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {renderNeonCharacters} from '../src/concept-characters.js';
+const ch={id:'char:linko',name:'Linko',rank:'S',element:'Anima',skill_names:{basic_attack:'Basic Attack'}};
+const profile={characters:{'char:linko':{owned:true,level:52,favorite:true,awakening_level:2,basic_attack_level:5,team_slot:1}},bonds:{'char:linko':{bond_level:6}}};
+const user=(kind,id)=>({owned:false,bond_level:0,awakening_level:0,...profile[kind]?.[id]});
+const args={catalog:{catalogRevision:6,characters:[ch],arcs:[],items:[]},user,bondMap:new Map(),selectedId:ch.id,query:'',listFilter:'all',selectedSkill:'redirect_skill',icon:()=>'/linko.png',bigArt:()=>'/linko.png'};
+const html=renderNeonCharacters(args);
+for(const marker of ['neo-board','neo-roster','neo-core','neo-right','TEAM SETUP','RESONANCE CHAIN','BOND','NEVERNESS','Linko','data-progress-kind="characters"','data-progress-kind="bonds"','data-action="toggle-favorite"','data-action="remove-team"'])assert(html.includes(marker),marker);
+assert(!html.includes('22,577'));
+const missing=renderNeonCharacters({...args,user:()=>({owned:false,bond_level:0}),icon:()=>null,bigArt:()=>null});
+assert(missing.includes('Add to collection'));
+console.log('PASS: neon concept UI renders real progress and placeholders.');
