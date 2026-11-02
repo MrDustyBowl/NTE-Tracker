@@ -1,5 +1,6 @@
 import bundledCatalog from '../catalog/catalog.v2.json';
 import {renderNeonCharacters} from './concept-characters.js';
+import ZANKOU_DOSSIER_ART from './assets/zankou-reference.webp';
 import {invoke} from '@tauri-apps/api/core';
 import {SKILLS,defaultProgress,acquiredDefaults,parseInteger,interactionStatus,catalogItem,sourcesFor,verifyCatalog} from './catalog-rules.js';
 
@@ -118,13 +119,14 @@ function entityArc(a){const r=user('arcs',a.id);return `<article class="v2-entit
 function entityItem(i){const p=user('items',i.id),sources=sourcesFor(i.id,catalog.item_sources);return `<article class="v2-entity">${itemArt(i)}<div class="v2-core"><div class="v2-name">${esc(i.name)}</div><div class="v2-sub">${esc(i.category)} · ${esc(i.rarity)} · ${sources.length} known source(s)</div>${pill(p.quantity>0?'IN INVENTORY':'NOT OWNED',p.quantity>0?'owned':'')}</div><div class="v2-controls"><label>Quantity <input class="v2-quantity" aria-label="${esc(i.name)} quantity" data-action="quantity" data-id="${esc(i.id)}" type="number" min="0" step="1" value="${p.quantity||0}"></label><button class="btn ghost small" data-action="edit" data-kind="items" data-id="${esc(i.id)}">Sources / Notes</button></div></article>`}
 function entityAchievement(a){const r=user('achievements',a.id);return `<article class="v2-entity"><div class="v2-art square">★</div><div class="v2-core"><div class="v2-name">${esc(a.name)}</div><div class="v2-sub">${esc(a.category||'Achievement')} · ${esc(a.description||'')}</div>${pill(r.status==='done'?'COMPLETED':r.status==='progress'?'IN PROGRESS':'NOT STARTED',r.status)}</div><div class="v2-controls"><select aria-label="${esc(a.name)} status" data-action="achievement-status" data-id="${esc(a.id)}"><option value="todo" ${r.status==='todo'?'selected':''}>Not Started</option><option value="progress" ${r.status==='progress'?'selected':''}>In Progress</option><option value="done" ${r.status==='done'?'selected':''}>Completed</option></select><button class="btn ghost small" data-action="edit" data-kind="achievements" data-id="${esc(a.id)}">Notes</button></div></article>`}
 function entityBond(c){const b=user('bonds',c.id),info=bondMap.get(c.id)||{},gift=catalogItem(info.favorite_gift_id,catalog.items),s=gift?sourcesFor(gift.id,catalog.item_sources):[];const st=bondStatus(c);const art=icon(c);const giftInfo=gift?`<b>${esc(gift.name)}</b><small>${s.length?esc(s.map(v=>v.source_name+(v.stage?' · '+v.stage:'')).join('; ')):'Source not catalogued'}</small>`:'<span class="v2-sub">Favourite gift not catalogued</span>';return `<article class="v2-bond"><div class="v2-bond-art ${c.rank==='A'?'rank-a':'rank-s'}">${art?`<img src="${esc(art)}" alt="">`:esc(c.name.substring(0,2))}</div><div class="v2-bond-body"><h3>${esc(c.name)}</h3><p>Bond <b>${b.bond_level}/10</b> · <span>${esc(statusNames[st])}</span></p><p class="v2-bond-gift">${giftInfo}</p><p>Dateable: ${info.dateable===null?'Not Verified':info.dateable?'Yes':'No'}</p><button class="btn ghost small" data-action="edit" data-kind="bonds" data-id="${esc(c.id)}">Bond Progress</button></div></article>`}
+function conceptPortrait(c){return c.id==='char:zankou'?(cachedImages.get('portrait:char:zankou')||ZANKOU_DOSSIER_ART):bigArt(c);}
 function renderCharacterWorkspace(){
   const chosen=catalog.characters.find(c=>c.id===selectedCharId);
-  if(!chosen)selectedCharId=catalog.characters.find(c=>user('characters',c.id).owned)?.id||catalog.characters[0]?.id||null;
+  if(!chosen)selectedCharId=catalog.characters.find(c=>c.id==='char:zankou'&&user('characters',c.id).owned)?.id||catalog.characters.find(c=>user('characters',c.id).owned)?.id||catalog.characters.find(c=>c.id==='char:zankou')?.id||catalog.characters[0]?.id||null;
   $('#list-heading').textContent='CHARACTER COLLECTION';
   $('#list-description').textContent='Character dossier · live profile';
   $('#count-line').textContent=catalog.characters.filter(c=>user('characters',c.id).owned).length+' / '+catalog.characters.length+' characters owned';
-  $('#content').innerHTML=renderNeonCharacters({catalog,user,bondMap,selectedId:selectedCharId,query,listFilter:rosterFilter,selectedSkill,icon,bigArt});
+  $('#content').innerHTML=renderNeonCharacters({catalog,user,bondMap,selectedId:selectedCharId,query,listFilter:rosterFilter,selectedSkill,icon,bigArt:conceptPortrait});
 }
 function renderOverview(){const charCount=catalog.characters.length,arcCount=catalog.arcs.length;$('#count-line').textContent=`Catalog ${catalog.contentVersion} · Player progression stays in SQLite`;
  $('#list-heading').textContent='THE SHARED CATALOGUE';$('#list-description').textContent='Game data is global. Collection progress is yours.';
